@@ -1,2 +1,2 @@
 #Python Selenium Settings
-gecko_Location='C:/Users/bmxps/webDrivers/geckodriver.exe'
+gecko_Location='Your Path Here'
