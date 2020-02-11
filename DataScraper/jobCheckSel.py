@@ -14,7 +14,7 @@ import selpysettings
 import dbtest
 from dbtest import toDB
 options = webdriver.FirefoxOptions()
-#options.add_argument('-headless')
+options.add_argument('-headless')
 from dbtest import linkBase
 tablefile="attempt_one.html"
 ofile3=open(tablefile,"a")
