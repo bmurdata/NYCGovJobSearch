@@ -22,13 +22,17 @@ A Python based data scrape of https://www1.nyc.gov/jobs/index.page to provide he
    From there you can jobCheck-json.py to generate a JSON file, and readjson.py to convert it to CSV. These are the preferred ways to get the data, and other methods provided in this repo will be updated afterwards.
 
    *NOTE:* A SQL Server Database setup script is provided. However, the jobCheck-json.py file will make no attempt to connect to it, and it is NOT required to run.
-# Packages installed in the pipfile
-
-   * scrapy -an initial attempt at webscraping. Not used as it could not be easily told to wait for the pages to load.
+# Python packages used in the project
+ ## In the Pipfile
+   * scrapy- an initial attempt at webscraping. Not used as it could not be easily told to wait for the pages to load.
    * requests- part of the initial attempt. Unused.
    * selenium- the main web scraper component. Does so using Firefox web browser.
-   * pyodbc- a module that provides connection to SQL Server. Unused outside of files that call dbtest.py
-
+   * pyodbc- a module that provides connection to SQL Server. Unused outside of files that call dbtest.py.
+ ## Other packages
+   * json- used to read to JSON file and read to CSV.
+   * time- used to track time of program execution.
+   * re- unused but referenced.
+   * requests- unused but referenced.
 # Current Progress
 
    - Initial web scraping complete. 

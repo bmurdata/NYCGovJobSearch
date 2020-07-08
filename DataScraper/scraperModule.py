@@ -27,9 +27,8 @@ def fireFox_setup():
             exit()
     return browser
 
-def selScrape(careerInterest,badCareer,linkSrchTest,fileToWrite,browser,linkBase):
+def selScrape(careerInterest,badCareer,linkSrchTest,browser,linkBase):
     jsondata={}
-    myjson=fileToWrite
     for longcat,cat in careerInterest.items():
         print(cat)
         browser.get(linkSrchTest.format(category=cat))
@@ -67,7 +66,7 @@ def selScrape(careerInterest,badCareer,linkSrchTest,fileToWrite,browser,linkBase
                     })
                 try:
                     button=browser.find_element_by_name("HRS_AGNT_RSLT_I$hdown$0")
-                    print("Found Button")
+                    #print("Found Button")
                     time.sleep(2)
                     try:
                         button.click()
@@ -76,35 +75,41 @@ def selScrape(careerInterest,badCareer,linkSrchTest,fileToWrite,browser,linkBase
                         
                         try:
                             button=browser.find_element_by_xpath("//*[@class='PSHYPERLINK' and @class='PTNEXTROW1']")#('PSHYPERLINK PTNEXTROW1')
-                            print("About to click the browser button")
                             time.sleep(2)
                             button.click()
-                            print("This time it worked. Huzzah!")
                         except Exception as e:
                             print(e)
                             print("Failed to click button. Adding to second attempt.")
                             badCareer[longcat]=cat
 
-                    print("Clicked the button")
+                    #print("Clicked the button")
                     numclicks=numclicks+1
                     time.sleep(2)
                 except:
                     print("Hit the end of the list for "+ cat +" after "+str(numclicks) + " Clicks")
+                    print(cat+" has "+str(len(jsondata[jobcat]))+ " jobs")
                     break
                     
         except Exception as e:
             print("I have failed at main try Block at "+cat+". Error message is: "+ str(e))
 
             badCareer[longcat]=cat
+    
+    
+    # print("There are "+str(len(jsondata))+ " total categories")
+    # for category in jsondata:
+    #     print(category+ " has "+str(len(jsondata[category])) +" jobs in it")
+    browser.quit()
+
+    return jsondata
+
+def writeJson(jsondata,fileToWrite):
     if jsondata:
-        try:  
-            with open(myjson,"a") as myfile:
+        try:
+            with open(fileToWrite, "w") as myfile:
                 print("Preparing to write file ")
                 json.dump(jsondata,myfile)
+        
         except Exception as e:
-            print("Failed to dump the json")
+            print("Failed to write to file")
             print(str(e))
-    
-    print("There are "+str(len(jsondata))+ " total categories")
-    for category in jsondata:
-        print(category+ " has "+str(len(jsondata[category])) +" jobs in it")
