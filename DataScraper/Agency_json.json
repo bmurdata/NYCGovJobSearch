@@ -1,0 +1,181 @@
+[{"address":"ADMINISTRATION FOR CHILDRE","dpt":"67","COUNT_dpt":"33520"}
+    ,{"address":"BOARD OF CORRECTIONS","dpt":"73","COUNT_dpt":"90"}
+    ,{"address":"BOARD OF CORRECTIONS      ","dpt":"73","COUNT_dpt":"32"}
+    ,{"address":"BOARD OF ELECTIONS","dpt":"3","COUNT_dpt":"3292"}
+    ,{"address":"BOARD OF ELECTIONS        ","dpt":"3","COUNT_dpt":"951"}
+    ,{"address":"BOROUGH PRESIDENT-BRONX","dpt":"11","COUNT_dpt":"234"}
+    ,{"address":"BOROUGH PRESIDENT-BRONX   ","dpt":"11","COUNT_dpt":"57"}
+    ,{"address":"BOROUGH PRESIDENT-BROOKLYN","dpt":"12","COUNT_dpt":"350"}
+    ,{"address":"BOROUGH PRESIDENT-MANHATTA","dpt":"10","COUNT_dpt":"283"}
+    ,{"address":"BOROUGH PRESIDENT-QUEENS","dpt":"13","COUNT_dpt":"247"}
+    ,{"address":"BOROUGH PRESIDENT-QUEENS  ","dpt":"13","COUNT_dpt":"61"}
+    ,{"address":"BOROUGH PRESIDENT-RICHMOND","dpt":"14","COUNT_dpt":"232"}
+    ,{"address":"BUSINESS INTEGRITY COMMISS","dpt":"831","COUNT_dpt":"429"}
+    ,{"address":"CAMPAIGN FINANCE BOARD","dpt":"4","COUNT_dpt":"438"}
+    ,{"address":"CAMPAIGN FINANCE BOARD    ","dpt":"4","COUNT_dpt":"134"}
+    ,{"address":"CITY CLERK","dpt":"103","COUNT_dpt":"302"}
+    ,{"address":"CITY CLERK                ","dpt":"103","COUNT_dpt":"78"}
+    ,{"address":"CITY COUNCIL","dpt":"102","COUNT_dpt":"3283"}
+    ,{"address":"CITY COUNCIL              ","dpt":"102","COUNT_dpt":"857"}
+    ,{"address":"CIVILIAN COMPLAINT REVIEW","dpt":"54","COUNT_dpt":"777"}
+    ,{"address":"CIVILIAN COMPLAINT REVIEW ","dpt":"54","COUNT_dpt":"203"}
+    ,{"address":"CIVIL SERVICE COMMISSION","dpt":"134","COUNT_dpt":"45"}
+    ,{"address":"CIVIL SERVICE COMMISSION  ","dpt":"134","COUNT_dpt":"13"}
+    ,{"address":"COMMISSION ON HUMAN RIGHTS","dpt":"226","COUNT_dpt":"584"}
+    ,{"address":"COMMUNITY BOARD N0.9-MANHA","dpt":"349","COUNT_dpt":"15"}
+    ,{"address":"COMMUNITY BOARD NO.10-BRON","dpt":"390","COUNT_dpt":"27"}
+    ,{"address":"COMMUNITY BOARD NO.10-BROO","dpt":"480","COUNT_dpt":"18"}
+    ,{"address":"COMMUNITY BOARD NO.10-MANH","dpt":"350","COUNT_dpt":"19"}
+    ,{"address":"COMMUNITY BOARD NO.10-QUEE","dpt":"440","COUNT_dpt":"20"}
+    ,{"address":"COMMUNITY BOARD NO.11-BRON","dpt":"391","COUNT_dpt":"24"}
+    ,{"address":"COMMUNITY BOARD NO.11-BROO","dpt":"481","COUNT_dpt":"16"}
+    ,{"address":"COMMUNITY BOARD NO.11-MANH","dpt":"351","COUNT_dpt":"16"}
+    ,{"address":"COMMUNITY BOARD NO.11-QUEE","dpt":"441","COUNT_dpt":"16"}
+    ,{"address":"COMMUNITY BOARD NO.12-BRON","dpt":"392","COUNT_dpt":"13"}
+    ,{"address":"COMMUNITY BOARD NO.12-BROO","dpt":"482","COUNT_dpt":"17"}
+    ,{"address":"COMMUNITY BOARD NO.12-MANH","dpt":"352","COUNT_dpt":"16"}
+    ,{"address":"COMMUNITY BOARD NO.12-QUEE","dpt":"442","COUNT_dpt":"16"}
+    ,{"address":"COMMUNITY BOARD NO.13-BROO","dpt":"483","COUNT_dpt":"17"}
+    ,{"address":"COMMUNITY BOARD NO.13-QUEE","dpt":"443","COUNT_dpt":"16"}
+    ,{"address":"COMMUNITY BOARD NO.14-BROO","dpt":"484","COUNT_dpt":"15"}
+    ,{"address":"COMMUNITY BOARD NO.14-QUEE","dpt":"444","COUNT_dpt":"15"}
+    ,{"address":"COMMUNITY BOARD NO.15-BROO","dpt":"485","COUNT_dpt":"14"}
+    ,{"address":"COMMUNITY BOARD NO.16-BROO","dpt":"486","COUNT_dpt":"14"}
+    ,{"address":"COMMUNITY BOARD NO.17-BROO","dpt":"487","COUNT_dpt":"20"}
+    ,{"address":"COMMUNITY BOARD NO.18-BROO","dpt":"488","COUNT_dpt":"15"}
+    ,{"address":"COMMUNITY BOARD NO.1 BRONX","dpt":"381","COUNT_dpt":"6"}
+    ,{"address":"COMMUNITY BOARD NO.1-BROOK","dpt":"471","COUNT_dpt":"15"}
+    ,{"address":"COMMUNITY BOARD NO.1-MANHA","dpt":"341","COUNT_dpt":"17"}
+    ,{"address":"COMMUNITY BOARD NO.1-QUEEN","dpt":"431","COUNT_dpt":"22"}
+    ,{"address":"COMMUNITY BOARD NO.1-RICHM","dpt":"491","COUNT_dpt":"15"}
+    ,{"address":"COMMUNITY BOARD NO.2-BRONX","dpt":"382","COUNT_dpt":"16"}
+    ,{"address":"COMMUNITY BOARD NO.2-BROOK","dpt":"472","COUNT_dpt":"17"}
+    ,{"address":"COMMUNITY BOARD NO.2-MANHA","dpt":"342","COUNT_dpt":"19"}
+    ,{"address":"COMMUNITY BOARD NO.2-QUEEN","dpt":"432","COUNT_dpt":"20"}
+    ,{"address":"COMMUNITY BOARD NO.2-RICHM","dpt":"492","COUNT_dpt":"20"}
+    ,{"address":"COMMUNITY BOARD NO.3-BRONX","dpt":"383","COUNT_dpt":"10"}
+    ,{"address":"COMMUNITY BOARD NO.3-BROOK","dpt":"473","COUNT_dpt":"14"}
+    ,{"address":"COMMUNITY BOARD NO.3-MANHA","dpt":"343","COUNT_dpt":"21"}
+    ,{"address":"COMMUNITY BOARD NO.3-QUEEN","dpt":"433","COUNT_dpt":"23"}
+    ,{"address":"COMMUNITY BOARD NO.3-RICHM","dpt":"493","COUNT_dpt":"16"}
+    ,{"address":"COMMUNITY BOARD NO.4 BRONX","dpt":"384","COUNT_dpt":"15"}
+    ,{"address":"COMMUNITY BOARD NO.4-BROOK","dpt":"474","COUNT_dpt":"14"}
+    ,{"address":"COMMUNITY BOARD NO.4-MANHA","dpt":"344","COUNT_dpt":"16"}
+    ,{"address":"COMMUNITY BOARD NO.4-QUEEN","dpt":"434","COUNT_dpt":"15"}
+    ,{"address":"COMMUNITY BOARD NO.5-BRONX","dpt":"385","COUNT_dpt":"12"}
+    ,{"address":"COMMUNITY BOARD NO.5-BROOK","dpt":"475","COUNT_dpt":"19"}
+    ,{"address":"COMMUNITY BOARD NO.5-MANHA","dpt":"345","COUNT_dpt":"16"}
+    ,{"address":"COMMUNITY BOARD NO.5-QUEEN","dpt":"435","COUNT_dpt":"20"}
+    ,{"address":"COMMUNITY BOARD NO.6-BRONX","dpt":"386","COUNT_dpt":"15"}
+    ,{"address":"COMMUNITY BOARD NO.6-BROOK","dpt":"476","COUNT_dpt":"15"}
+    ,{"address":"COMMUNITY BOARD NO.6-MANHA","dpt":"346","COUNT_dpt":"13"}
+    ,{"address":"COMMUNITY BOARD NO.6-QUEEN","dpt":"436","COUNT_dpt":"22"}
+    ,{"address":"COMMUNITY BOARD NO.7-BRONX","dpt":"387","COUNT_dpt":"14"}
+    ,{"address":"COMMUNITY BOARD NO.7-BROOK","dpt":"477","COUNT_dpt":"15"}
+    ,{"address":"COMMUNITY BOARD NO.7-MANHA","dpt":"347","COUNT_dpt":"15"}
+    ,{"address":"COMMUNITY BOARD NO.7-QUEEN","dpt":"437","COUNT_dpt":"20"}
+    ,{"address":"COMMUNITY BOARD NO.8-BRONX","dpt":"388","COUNT_dpt":"16"}
+    ,{"address":"COMMUNITY BOARD NO.8-BROOK","dpt":"478","COUNT_dpt":"15"}
+    ,{"address":"COMMUNITY BOARD NO.8-MANHA","dpt":"348","COUNT_dpt":"23"}
+    ,{"address":"COMMUNITY BOARD NO.8-QUEEN","dpt":"438","COUNT_dpt":"21"}
+    ,{"address":"COMMUNITY BOARD NO.9-BRONX","dpt":"389","COUNT_dpt":"22"}
+    ,{"address":"COMMUNITY BOARD NO.9-BROOK","dpt":"479","COUNT_dpt":"10"}
+    ,{"address":"COMMUNITY BOARD NO.9-QUEEN","dpt":"439","COUNT_dpt":"18"}
+    ,{"address":"CONFLICTS OF INTEREST BOAR","dpt":"312","COUNT_dpt":"123"}
+    ,{"address":"CUNY BRONX COMMUNITY COLLE","dpt":"463","COUNT_dpt":"11700"}
+    ,{"address":"CUNY CENTRAL OFFICE","dpt":"467","COUNT_dpt":"95"}
+    ,{"address":"CUNY CENTRAL OFFICE       ","dpt":"467","COUNT_dpt":"33"}
+    ,{"address":"CUNY COLLEGE OF STATEN ISL","dpt":"462","COUNT_dpt":"2322"}
+    ,{"address":"CUNY HOSTOS COMMUNITY COLL","dpt":"468","COUNT_dpt":"8845"}
+    ,{"address":"CUNY HUNTER COLLEGE HIGH S","dpt":"470","COUNT_dpt":"1607"}
+    ,{"address":"CUNY KINGSBOROUGH COMMMUNI","dpt":"465","COUNT_dpt":"18455"}
+    ,{"address":"CUNY LAGUARDIA COMMUNITY C","dpt":"469","COUNT_dpt":"20315"}
+    ,{"address":"CUNY MANHATTAN COMMUNITY C","dpt":"466","COUNT_dpt":"22026"}
+    ,{"address":"CUNY MEDGAR EVERS COLLEGE","dpt":"453","COUNT_dpt":"6"}
+    ,{"address":"CUNY QUEENSBOROUGH COMMUNI","dpt":"464","COUNT_dpt":"13157"}
+    ,{"address":"DEPARTMENT FOR THE AGING","dpt":"125","COUNT_dpt":"4327"}
+    ,{"address":"DEPARTMENT FOR THE AGING  ","dpt":"125","COUNT_dpt":"1246"}
+    ,{"address":"DEPARTMENT OF BUILDINGS","dpt":"810","COUNT_dpt":"5820"}
+    ,{"address":"DEPARTMENT OF BUILDINGS   ","dpt":"810","COUNT_dpt":"1798"}
+    ,{"address":"DEPARTMENT OF BUSINESS SER","dpt":"801","COUNT_dpt":"1640"}
+    ,{"address":"DEPARTMENT OF CITY PLANNIN","dpt":"30","COUNT_dpt":"1681"}
+    ,{"address":"DEPARTMENT OF CITYWIDE ADM","dpt":"868","COUNT_dpt":"77339"}
+    ,{"address":"DEPARTMENT OF CONSUMER AFF","dpt":"866","COUNT_dpt":"2043"}
+    ,{"address":"DEPARTMENT OF CORRECTION","dpt":"72","COUNT_dpt":"47268"}
+    ,{"address":"DEPARTMENT OF CORRECTION  ","dpt":"72","COUNT_dpt":"13424"}
+    ,{"address":"DEPARTMENT OF CULTURAL AFF","dpt":"126","COUNT_dpt":"352"}
+    ,{"address":"DEPARTMENT OF DESIGN AND C","dpt":"850","COUNT_dpt":"7136"}
+    ,{"address":"DEPARTMENT OF EDUCATION","dpt":"740","COUNT_dpt":"51644"}
+    ,{"address":"DEPARTMENT OF EDUCATION   ","dpt":"740","COUNT_dpt":"13970"}
+    ,{"address":"DEPARTMENT OF ENVIRONMENTA","dpt":"826","COUNT_dpt":"30858"}
+    ,{"address":"DEPARTMENT OF FINANCE","dpt":"836","COUNT_dpt":"8287"}
+    ,{"address":"DEPARTMENT OF FINANCE     ","dpt":"836","COUNT_dpt":"2170"}
+    ,{"address":"DEPARTMENT OF HEALTH AND M","dpt":"816","COUNT_dpt":"34202"}
+    ,{"address":"DEPARTMENT OF HOMELESS SER","dpt":"71","COUNT_dpt":"12197"}
+    ,{"address":"DEPARTMENT OF INFORMATION","dpt":"858","COUNT_dpt":"5825"}
+    ,{"address":"DEPARTMENT OF INFORMATION ","dpt":"858","COUNT_dpt":"1688"}
+    ,{"address":"DEPARTMENT OF INVESTIGATIO","dpt":"32","COUNT_dpt":"1692"}
+    ,{"address":"DEPARTMENT OF PARKS & RECR","dpt":"846","COUNT_dpt":"58333"}
+    ,{"address":"DEPARTMENT OF PROBATION","dpt":"781","COUNT_dpt":"4274"}
+    ,{"address":"DEPARTMENT OF PROBATION   ","dpt":"781","COUNT_dpt":"1138"}
+    ,{"address":"DEPARTMENT OF SANITATION","dpt":"827","COUNT_dpt":"45374"}
+    ,{"address":"DEPARTMENT OF SANITATION  ","dpt":"827","COUNT_dpt":"12627"}
+    ,{"address":"DEPARTMENT OF TRANSPORTATI","dpt":"841","COUNT_dpt":"27456"}
+    ,{"address":"DEPARTMENT OF VETERANS' SE","dpt":"63","COUNT_dpt":"109"}
+    ,{"address":"DEPARTMENT OF YOUTH AND CO","dpt":"261","COUNT_dpt":"2733"}
+    ,{"address":"DEPT. OF RECORDS AND INFOR","dpt":"860","COUNT_dpt":"346"}
+    ,{"address":"DISTRICT ATTORNEY-BRONX CO","dpt":"902","COUNT_dpt":"5206"}
+    ,{"address":"DISTRICT ATTORNEY-KINGS CO","dpt":"903","COUNT_dpt":"5870"}
+    ,{"address":"DISTRICT ATTORNEY-NEW YORK","dpt":"901","COUNT_dpt":"8082"}
+    ,{"address":"DISTRICT ATTORNEY-QUEENS C","dpt":"904","COUNT_dpt":"3494"}
+    ,{"address":"DISTRICT ATTORNEY-RICHMOND","dpt":"905","COUNT_dpt":"707"}
+    ,{"address":"DISTRICT ATTORNEY - SPECIA","dpt":"906","COUNT_dpt":"1149"}
+    ,{"address":"EQUAL EMPLOYMENT PRACTICES","dpt":"133","COUNT_dpt":"53"}
+    ,{"address":"FINANCIAL INFORMATION SERV","dpt":"127","COUNT_dpt":"2219"}
+    ,{"address":"FIRE DEPARTMENT","dpt":"57","COUNT_dpt":"68405"}
+    ,{"address":"FIRE DEPARTMENT           ","dpt":"57","COUNT_dpt":"18081"}
+    ,{"address":"HOUSING PRESERVATION & DEV","dpt":"806","COUNT_dpt":"11751"}
+    ,{"address":"HRA/DEPARTMENT OF SOCIAL S","dpt":"69","COUNT_dpt":"69376"}
+    ,{"address":"INDEPENDENT BUDGET OFFICE","dpt":"132","COUNT_dpt":"153"}
+    ,{"address":"INDEPENDENT BUDGET OFFICE ","dpt":"132","COUNT_dpt":"38"}
+    ,{"address":"LANDMARKS PRESERVATION COM","dpt":"136","COUNT_dpt":"398"}
+    ,{"address":"LAW DEPARTMENT","dpt":"25","COUNT_dpt":"7107"}
+    ,{"address":"LAW DEPARTMENT            ","dpt":"25","COUNT_dpt":"1990"}
+    ,{"address":"MAYOR'S OFFICE OF CONTRACT","dpt":"82","COUNT_dpt":"412"}
+    ,{"address":"MUNICIPAL WATER FINANCE AU","dpt":"185","COUNT_dpt":"67"}
+    ,{"address":"NEW YORK CITY FIRE PENSION","dpt":"257","COUNT_dpt":"61"}
+    ,{"address":"NYC EMPLOYEES' RETIREMENT","dpt":"9","COUNT_dpt":"1813"}
+    ,{"address":"NYC EMPLOYEES' RETIREMENT ","dpt":"9","COUNT_dpt":"466"}
+    ,{"address":"N.Y.C. HOUSING AUTHORITY","dpt":"996","COUNT_dpt":"47530"}
+    ,{"address":"N.Y.C. HOUSING AUTHORITY  ","dpt":"996","COUNT_dpt":"12336"}
+    ,{"address":"NYC POLICE PENSION FUND","dpt":"256","COUNT_dpt":"648"}
+    ,{"address":"NYC POLICE PENSION FUND   ","dpt":"256","COUNT_dpt":"176"}
+    ,{"address":"N.Y.C. TRANSIT AUTHORITY","dpt":"998","COUNT_dpt":"220321"}
+    ,{"address":"N.Y.C. TRANSIT AUTHORITY  ","dpt":"998","COUNT_dpt":"55587"}
+    ,{"address":"OFFICE OF ADMINISTRATIVE T","dpt":"820","COUNT_dpt":"3375"}
+    ,{"address":"OFFICE OF COLLECTIVE BARGA","dpt":"313","COUNT_dpt":"91"}
+    ,{"address":"OFFICE OF EMERGENCY MANAGE","dpt":"17","COUNT_dpt":"867"}
+    ,{"address":"OFFICE OF LABOR RELATIONS","dpt":"214","COUNT_dpt":"519"}
+    ,{"address":"OFFICE OF LABOR RELATIONS ","dpt":"214","COUNT_dpt":"142"}
+    ,{"address":"OFFICE OF MANAGEMENT AND B","dpt":"19","COUNT_dpt":"2072"}
+    ,{"address":"OFFICE OF PAYROLL ADMINIST","dpt":"131","COUNT_dpt":"801"}
+    ,{"address":"OFFICE OF THE ACTUARY","dpt":"8","COUNT_dpt":"152"}
+    ,{"address":"OFFICE OF THE ACTUARY     ","dpt":"8","COUNT_dpt":"41"}
+    ,{"address":"OFFICE OF THE COMPTROLLER","dpt":"15","COUNT_dpt":"3245"}
+    ,{"address":"OFFICE OF THE COMPTROLLER ","dpt":"15","COUNT_dpt":"889"}
+    ,{"address":"OFFICE OF THE MAYOR","dpt":"2","COUNT_dpt":"2209"}
+    ,{"address":"OFFICE OF THE MAYOR       ","dpt":"2","COUNT_dpt":"548"}
+    ,{"address":"POLICE DEPARTMENT","dpt":"56","COUNT_dpt":"218766"}
+    ,{"address":"POLICE DEPARTMENT         ","dpt":"56","COUNT_dpt":"57759"}
+    ,{"address":"PUBLIC ADMINISTRATOR BRONX","dpt":"942","COUNT_dpt":"40"}
+    ,{"address":"PUBLIC ADMINISTRATOR KINGS","dpt":"943","COUNT_dpt":"62"}
+    ,{"address":"PUBLIC ADMINISTRATOR NEW Y","dpt":"941","COUNT_dpt":"52"}
+    ,{"address":"PUBLIC ADMINISTRATOR QUEEN","dpt":"944","COUNT_dpt":"41"}
+    ,{"address":"PUBLIC ADMINISTRATOR RICHM","dpt":"945","COUNT_dpt":"25"}
+    ,{"address":"PUBLIC ADVOCATE","dpt":"101","COUNT_dpt":"209"}
+    ,{"address":"PUBLIC ADVOCATE           ","dpt":"101","COUNT_dpt":"72"}
+    ,{"address":"TAX COMMISSION","dpt":"21","COUNT_dpt":"219"}
+    ,{"address":"TAX COMMISSION            ","dpt":"21","COUNT_dpt":"59"}
+    ,{"address":"TAXI AND LIMOUSINE COMMISS","dpt":"156","COUNT_dpt":"3331"}
+    ,{"address":"TEACHERS' RETIREMENT SYSTE","dpt":"41","COUNT_dpt":"1950"}
+    ,{"address":"TRIBOROUGH BRIDGE AND TUNN","dpt":"993","COUNT_dpt":"10017"}]
