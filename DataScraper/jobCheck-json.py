@@ -6,11 +6,71 @@ import scraperModule
 from scraperModule import selScrape
 from scraperModule import fireFox_setup
 from scraperModule import writeJson
-linkBase="https://a127-jobs.nyc.gov/psc/nycjobs/EMPLOYEE/HRMS/c/HRS_HRAM.HRS_APP_SCHJOB.GBL?Page=HRS_APP_JBPST&Action=U&FOCUS=Applicant&SiteId=1&JobOpeningId={jobId}&PostingSeq=1&"
+
+# Function to scrape NYC Gov Jobs and output to file
+
+def run_scrape(jsonfile,searchCriteria,linkTemplate,jobLinkTemplate):
+    badCareer={}
+    try:
+        browser=fireFox_setup()
+        print("Opened Broswer")
+        firstPass=selScrape(searchCriteria,badCareer,linkTemplate,browser,jobLinkTemplate)
+    except Exception as e:
+        print("Failed due to "+ str(e))
+        browser.quit()
+
+    stillBad={}
+
+    #Based on what fails, conduct second pass
+    if badCareer:
+        try:
+            browser=fireFox_setup()
+            secondPass=selScrape(badCareer,stillBad,linkTemplate,browser,jobLinkTemplate)
+
+        except Exception as e:
+            print("Failed due to "+ str(e))
+            browser.quit()
+    if not badCareer:
+        secondPass={}
+    print("The following still failed:")
+
+    for x in stillBad:
+        print(x)
+    # Combine first and second pass dictionaries
+    print("First pass has "+str(len(firstPass)))
+
+    print("Second pass has "+str(len(secondPass)))
+
+    for key in secondPass:
+        if key in firstPass:
+            matches=0
+            for item in secondPass[key]:
+                if item not in firstPass[key]:
+                    firstPass[key].append(item)
+                else:
+                    matches +=1
+            print(key+" had "+str(matches)+" matches")
+        else:
+            firstPass[key]=secondPass[key]
+    print("Combined the passes have "+str(len(firstPass)))
+
+    print("There are "+str(len(firstPass))+ " total categories in firstpass")
+    for category in firstPass:
+        print(category+ " has "+str(len(firstPass[category])) +" jobs in it")
+
+    print("There are "+str(len(secondPass))+ " total categories in secondpass")
+    for category in secondPass:
+        print(category+ " has "+str(len(secondPass[category])) +" jobs in it")
+
+    writeJson(firstPass,jsonfile)
+# Run scraping and write to file 
+
+# Category Check
+joblinkBase="https://a127-jobs.nyc.gov/psc/nycjobs/EMPLOYEE/HRMS/c/HRS_HRAM.HRS_APP_SCHJOB.GBL?Page=HRS_APP_JBPST&Action=U&FOCUS=Applicant&SiteId=1&JobOpeningId={jobId}&PostingSeq=1&"
 
 
     
-linkSrchTest="https://a127-jobs.nyc.gov/index_new.html?category={category}"
+linkSrchTemplate="https://a127-jobs.nyc.gov/index_new.html?category={category}"
 
 careerInterest={"Administration and Human Resources":"CAS",
                 "Communications and Intergovernmental Affairs":"CIG",
@@ -24,9 +84,16 @@ careerInterest={"Administration and Human Resources":"CAS",
                 "Public Safety, Inspections and Enforcement":"PSI",
                 "Social Services":"SOC"
                 }
-badCareer={}
-linkSrchTest="https://a127-jobs.nyc.gov/index_new.html?agency={category}"
-careerInterest={
+#careerInterest={"Administration and Human Resources":"CAS"}
+
+category_jsonfile="SECOND-job-by-category.json"
+
+run_scrape(category_jsonfile,careerInterest,linkSrchTemplate,joblinkBase)
+
+# Agency check
+code_jsonfile="SECOND-job-by-code.json"
+linkSrchTemplate="https://a127-jobs.nyc.gov/index_new.html?agency={category}"
+agency_codes={
     "ADMINISTRATION FOR CHILDRE": "067",
     "BOARD OF CORRECTIONS": "073",
     "BOARD OF ELECTIONS": "003",
@@ -177,64 +244,10 @@ careerInterest={
     "TEACHERS' RETIREMENT SYSTE": "041",
     "TRIBOROUGH BRIDGE AND TUNN": "993"
 }
-
-print("Opened the Browser")
-jsonfile="codes-test.json"
-
-#Open the browser for firts pass
-try:
-    browser=fireFox_setup()
-    firstPass=selScrape(careerInterest,badCareer,linkSrchTest,browser,linkBase)
-except Exception as e:
-    print("Failed due to "+ str(e))
-    browser.quit()
-
-stillBad={}
-
-#Based on what fails, conduct second pass
-try:
-    browser=fireFox_setup()
-    secondPass=selScrape(badCareer,stillBad,linkSrchTest,browser,linkBase)
-
-except Exception as e:
-    print("Failed due to "+ str(e))
-    browser.quit()
-
-# Sort by agency Number
-
-print("The following still failed:")
-
-for x in stillBad:
-    print(x)
-# Combine first and second pass dictionaries
-print("First pass has "+str(len(firstPass)))
-
-print("Second pass has "+str(len(secondPass)))
-
-for key in secondPass:
-    if key in firstPass:
-        matches=0
-        for item in secondPass[key]:
-            if item not in firstPass[key]:
-                firstPass[key].append(item)
-            else:
-                matches +=1
-        print(key+" had "+str(matches)+" matches")
-    else:
-        firstPass[key]=secondPass[key]
-print("Combined the passes have "+str(len(firstPass)))
-
-print("There are "+str(len(firstPass))+ " total categories in firstpass")
-for category in firstPass:
-    print(category+ " has "+str(len(firstPass[category])) +" jobs in it")
-
-print("There are "+str(len(secondPass))+ " total categories in secondpass")
-for category in secondPass:
-    print(category+ " has "+str(len(secondPass[category])) +" jobs in it")
+#agency_codes={"ADMINISTRATION FOR CHILDRE": "067"}
+run_scrape(code_jsonfile,agency_codes,linkSrchTemplate,joblinkBase)
 
 
-
-writeJson(firstPass,jsonfile)
 final_time=round(time.time()-start_time,2)
 print("------")
 print("Time to execute:{time}".format(time=final_time))

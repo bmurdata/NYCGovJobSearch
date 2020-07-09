@@ -1,7 +1,7 @@
 import json
-
-jsonfile="codes-test.json"
-jobcsv="jobByCode.csv"
+import sys
+jsonfile="SECOND-job-by-code.json"
+jobcsv="jobsByCode2.csv"
 
 with open(jobcsv,"w") as initial:
     initial.write("jobNum,title,Link,shortCategory,longCategory\n")
