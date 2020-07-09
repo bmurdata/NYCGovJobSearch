@@ -4,7 +4,12 @@ A Python based data scrape of https://www1.nyc.gov/jobs/index.page to provide he
 # About
 
  This project provides a list of jobs from the NYC Jobs search site, grouped by category, agency, and more. In addition, it provides a direct link to jobs, something the website does not directly support. 
+ 
+ In the main directory I have posted CSV files of the jobs by category, as well as agency code and name. Json files can be found in Datascraper folder, along with current project files.
 
+ The main project script(jobCheck-json.py) currently outputs the jobs into a JSON format. If needed, a second script (readjson.py) converts it to CSV. Agency names were taken from [NYC Open Data Civil List](https://data.cityofnewyork.us/City-Government/Civil-List/). 
+ 
+ 
 # Installation and Setup
 
  Python 3.7 is required to run this project. You can do so from Python.org [here](https://www.python.org/downloads/). In addtion, make sure to have pip3 installed. 
@@ -33,15 +38,18 @@ A Python based data scrape of https://www1.nyc.gov/jobs/index.page to provide he
    * time- used to track time of program execution.
    * re- unused but referenced.
    * requests- unused but referenced.
+
 # Current Progress
 
    - Initial web scraping complete. 
    - Basic JSON and CSV files generated.
    - SQL Server connections made, HTML files can be made as well.
+   - Pulled list of NYC agencies and agency codes from [NYC Open Data Civil List](https://data.cityofnewyork.us/City-Government/Civil-List/ye3c-m4ga) using Socrata API through SoQL, which borrows from SQL.
+   - Scraped jobs sorted by agency and agency code, in addition to category
 
 # Next Steps
-   - Get more from scraped links. Job title, posted date, etc. 
-   - Follow links and get additional data- salary, etc. 
+   - Get more from scraped links. Posted date, posted until, etc.  
+   - Follow links and get additional data- salary, number of positions, job id.
 # Future
    - Clean up pipfile to remove packages not used in main files. Consider splitting them up.
    - Website to display information and provide searches, along with updates.
