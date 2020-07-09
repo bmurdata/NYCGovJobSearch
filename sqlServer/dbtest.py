@@ -11,8 +11,8 @@ cursor.execute('SELECT @@version')
 for row in cursor:
     print(row)
 
-cursor.execute("CREATE TABLE Ftable(ID int, Descrip varchar(20))")
-cursor.commit()
+# cursor.execute("CREATE TABLE Ftable(ID int, Descrip varchar(20))")
+# cursor.commit()
 
-cursor.execute("INSERT INTO Ftable (ID, Descrip) VALUES (1,'Hello World' )")
-cursor.commit()
+# cursor.execute("INSERT INTO Ftable (ID, Descrip) VALUES (1,'Hello World' )")
+# cursor.commit()
