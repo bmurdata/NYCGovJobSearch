@@ -7,7 +7,7 @@ A Python based data scrape of https://www1.nyc.gov/jobs/index.page to provide he
  
  In the main directory I have posted CSV files of the jobs by category, as well as agency code and name. Json files can be found in Datascraper folder, along with current project files.
 
- The main project script(jobCheck-json.py) currently outputs the jobs into a JSON format. If needed, a second script (readjson.py) converts it to CSV. Agency names were taken from [NYC Open Data Civil List](https://data.cityofnewyork.us/City-Government/Civil-List/). 
+ The main project script(jobCheck-json.py) currently outputs the jobs into a JSON format. If needed, a second script (readjson.py) converts it to CSV. Agency names were taken from [NYC Open Data Civil List](https://data.cityofnewyork.us/City-Government/Civil-List/ye3c-m4ga). 
  
  
 # Installation and Setup
