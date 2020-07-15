@@ -1,75 +1,41 @@
 import time 
 
 start_time=time.time()
-
+import sys
 import scraperModule
 from scraperModule import selScrape
 from scraperModule import fireFox_setup
 from scraperModule import writeJson
+from scraperModule import jsonToCSV
+from scraperModule import run_scrape
+import argparse
 
-# Function to scrape NYC Gov Jobs and output to file
 
-def run_scrape(jsonfile,searchCriteria,linkTemplate,jobLinkTemplate):
-    badCareer={}
-    try:
-        browser=fireFox_setup()
-        print("Opened Broswer")
-        firstPass=selScrape(searchCriteria,badCareer,linkTemplate,browser,jobLinkTemplate)
-    except Exception as e:
-        print("Failed due to "+ str(e))
-        browser.quit()
+currTime=str(time.time()).split(".")[0]
+default_code_json=str(currTime)+"By-AgencyCode"
+default_code_csv=str(currTime)+"By-AgencyCode"
+default_category_json=str(currTime)+"By-Category"
+default_category_csv=str(currTime)+"By-Category"
 
-    stillBad={}
+parser = argparse.ArgumentParser()
+parser.add_argument("-acsv","--agencycsv",help="Agency Code CSV name, with extensions automatically added.",
+                    default=default_code_csv)
+parser.add_argument("-ajson","--agencyjson", help="Agency Code JSON name,with extensions automatically added",
+                    default=default_code_json)
 
-    #Based on what fails, conduct second pass
-    if badCareer:
-        try:
-            browser=fireFox_setup()
-            secondPass=selScrape(badCareer,stillBad,linkTemplate,browser,jobLinkTemplate)
+parser.add_argument("-ccsv","--categorycsv",help="Category CSV file name,with extensions automatically added",
+                    default=default_category_csv)
+parser.add_argument("-cjson","--categoryjson", help="Category JSON file name,with extensions automatically added",
+                    default=default_category_json)
 
-        except Exception as e:
-            print("Failed due to "+ str(e))
-            browser.quit()
-    if not badCareer:
-        secondPass={}
-    print("The following still failed:")
+args = parser.parse_args()
 
-    for x in stillBad:
-        print(x)
-    # Combine first and second pass dictionaries
-    print("First pass has "+str(len(firstPass)))
-
-    print("Second pass has "+str(len(secondPass)))
-
-    for key in secondPass:
-        if key in firstPass:
-            matches=0
-            for item in secondPass[key]:
-                if item not in firstPass[key]:
-                    firstPass[key].append(item)
-                else:
-                    matches +=1
-            print(key+" had "+str(matches)+" matches")
-        else:
-            firstPass[key]=secondPass[key]
-    print("Combined the passes have "+str(len(firstPass)))
-
-    print("There are "+str(len(firstPass))+ " total categories in firstpass")
-    for category in firstPass:
-        print(category+ " has "+str(len(firstPass[category])) +" jobs in it")
-
-    print("There are "+str(len(secondPass))+ " total categories in secondpass")
-    for category in secondPass:
-        print(category+ " has "+str(len(secondPass[category])) +" jobs in it")
-
-    writeJson(firstPass,jsonfile)
 # Run scraping and write to file 
 
-# Category Check
 joblinkBase="https://a127-jobs.nyc.gov/psc/nycjobs/EMPLOYEE/HRMS/c/HRS_HRAM.HRS_APP_SCHJOB.GBL?Page=HRS_APP_JBPST&Action=U&FOCUS=Applicant&SiteId=1&JobOpeningId={jobId}&PostingSeq=1&"
 
 
-    
+# Category Check
 linkSrchTemplate="https://a127-jobs.nyc.gov/index_new.html?category={category}"
 
 careerInterest={"Administration and Human Resources":"CAS",
@@ -86,13 +52,20 @@ careerInterest={"Administration and Human Resources":"CAS",
                 }
 #careerInterest={"Administration and Human Resources":"CAS"}
 
-category_jsonfile="SECOND-job-by-category.json"
+category_jsonfile=(args.categoryjson.split(".",1)[0])+".json"
+category_csvfile=(args.categorycsv.split(".",1)[0])+".csv"
 
-run_scrape(category_jsonfile,careerInterest,linkSrchTemplate,joblinkBase)
+run_scrape(category_jsonfile,careerInterest,linkSrchTemplate,joblinkBase,category_csvfile)
+
+
 
 # Agency check
-code_jsonfile="SECOND-job-by-code.json"
+
+code_jsonfile=(args.agencyjson.split(".",1)[0]) + ".json"
+code_csvfile=(args.agencycsv.split(".",1)[0]) +".csv"
+
 linkSrchTemplate="https://a127-jobs.nyc.gov/index_new.html?agency={category}"
+
 agency_codes={
     "ADMINISTRATION FOR CHILDRE": "067",
     "BOARD OF CORRECTIONS": "073",
@@ -245,7 +218,7 @@ agency_codes={
     "TRIBOROUGH BRIDGE AND TUNN": "993"
 }
 #agency_codes={"ADMINISTRATION FOR CHILDRE": "067"}
-run_scrape(code_jsonfile,agency_codes,linkSrchTemplate,joblinkBase)
+run_scrape(code_jsonfile,agency_codes,linkSrchTemplate,joblinkBase,code_csvfile)
 
 
 final_time=round(time.time()-start_time,2)
