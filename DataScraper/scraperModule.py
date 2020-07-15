@@ -41,6 +41,15 @@ def selScrape(careerInterest,badCareer,linkSrchTest,browser,linkBase):
             browser.switch_to.frame(iframe)
             jobcat="jobs_for_" + cat
             jsondata[jobcat]=[]
+            try:
+                checkNull=browser.find_element_by_id("HRS_SCH_WRK_HRS_CC_NO_RSLT")
+                if checkNull.get_attribute('innerText')=="No Results Found":
+                    print(longcat+" has no items in it. Skipping.")
+                    continue
+            except:
+                print("Values Found")
+
+
             #Keep clicking next until you hit the end of the list.
             numclicks=1
             while True:
