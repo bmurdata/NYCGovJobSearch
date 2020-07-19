@@ -11,6 +11,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import selpysettings
 import time
 import json
+import sys
 options = webdriver.FirefoxOptions()
 options.add_argument('-headless')
 
@@ -29,9 +30,13 @@ def fireFox_setup():
 
 def selScrape(careerInterest,badCareer,linkSrchTest,browser,linkBase):
     jsondata={}
+    numItems=len(careerInterest)
+    itemcount=0
+
     for longcat,cat in careerInterest.items():
-        print(cat)
+        
         browser.get(linkSrchTest.format(category=cat))
+        itemcount +=1
 
         try:
             print("Trying to open page for "+longcat)
@@ -53,11 +58,13 @@ def selScrape(careerInterest,badCareer,linkSrchTest,browser,linkBase):
             #Keep clicking next until you hit the end of the list.
             numclicks=1
             while True:
-                #Get the table 
+                #Get the table
+                sys.stdout.write('\r')
+                sys.stdout.flush()
+                sys.stdout.write("On click: "+str(numclicks))
+                sys.stdout.flush()
                 tb=browser.find_element_by_class_name("PSLEVEL1GRIDNBO")
-                #Get all the links in the table
-                #all_anchors=tb.find_elements_by_tag_name("a")
-                #Get all the links in the table
+
                 all_anchors=tb.find_elements_by_css_selector("a")
                 all_attributes=tb.find_elements_by_css_selector("div.attributes")
                 for i in range(0,len(all_anchors)):
@@ -76,6 +83,8 @@ def selScrape(careerInterest,badCareer,linkSrchTest,browser,linkBase):
 
                     for pairs in splitattri:
                         attribute_Value[pairs[0].strip()]=pairs[1].strip()
+                        numItems +=1
+                    
                     jsondata[jobcat].append({
                             'jobNum': jobNum,
                             'title':title,
@@ -88,20 +97,8 @@ def selScrape(careerInterest,badCareer,linkSrchTest,browser,linkBase):
                             'Location':attribute_Value['Location'] if 'Location' in attribute_Value else "Not Listed", # Agency
                             'Posted_Date':attribute_Value['Posted Date'] if 'Posted Date' in attribute_Value else "Not Listed", # Posted Date
                         })
+                    
 
-                # for link in all_anchors:
-                #     jobNum=link.get_attribute('innerText')[-6:]
-                #     title=link.get_attribute('innerText')
-
-                #     nlink=linkBase.format(jobId=jobNum)
-
-                #     jsondata[jobcat].append({
-                #         'jobNum': jobNum,
-                #         'title':title,
-                #         'link':nlink,
-                #         'shortcategory':cat,
-                #         'longcategory':longcat
-                #     })
                 #Find the button to load the next results.
                 try:
                     button=browser.find_element_by_name("HRS_AGNT_RSLT_I$hdown$0")
@@ -119,27 +116,25 @@ def selScrape(careerInterest,badCareer,linkSrchTest,browser,linkBase):
                         except Exception as e:
                             print(e)
                             print("Failed to click button. Adding to second attempt.")
+                            print(" ")
                             badCareer[longcat]=cat
 
                     #print("Clicked the button")
                     numclicks=numclicks+1
                     time.sleep(2)
                 except:
+                    print(" ")
                     print("Hit the end of the list for "+ cat +" after "+str(numclicks) + " Clicks")
                     print(cat+" has "+str(len(jsondata[jobcat]))+ " jobs")
+                    print(" ")
+
                     break
                     
         except Exception as e:
             print("I have failed at main try Block at "+cat+". Error message is: "+ str(e))
-
             badCareer[longcat]=cat
-    
-    
-    # print("There are "+str(len(jsondata))+ " total categories")
-    # for category in jsondata:
-    #     print(category+ " has "+str(len(jsondata[category])) +" jobs in it")
     browser.quit()
-
+    print("There are "+ str(numItems) +" jobs found.")
     return jsondata
 
 def writeJson(jsondata,fileToWrite):
@@ -225,9 +220,6 @@ def run_scrape(jsonfile,searchCriteria,linkTemplate,jobLinkTemplate,csvfile):
 
     writeJson(firstPass,jsonfile)
     jsonToCSV(jsonfile,csvfile)
-
-
-
 
 def testScrape(careerInterest,linkSrchTest,linkBase,outfile,csvfile):
     jsondata={}
@@ -318,6 +310,8 @@ def testScrape(careerInterest,linkSrchTest,linkBase,outfile,csvfile):
     jsonToCSV(outfile,csvfile)
     browser.quit()
 
+
+#Test of scraper module
 if __name__=='__main__':
     start_time=time.time()
     joblinkBase="https://a127-jobs.nyc.gov/psc/nycjobs/EMPLOYEE/HRMS/c/HRS_HRAM.HRS_APP_SCHJOB.GBL?Page=HRS_APP_JBPST&Action=U&FOCUS=Applicant&SiteId=1&JobOpeningId={jobId}&PostingSeq=1&"
