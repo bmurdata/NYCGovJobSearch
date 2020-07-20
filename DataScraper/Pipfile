@@ -7,8 +7,6 @@ verify_ssl = true
 pylint = "*"
 
 [packages]
-scrapy = "*"
-requests = "*"
 selenium = "*"
 pyodbc = "*"
 

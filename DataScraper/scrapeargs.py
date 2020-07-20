@@ -1,11 +1,17 @@
 import argparse
 import time 
 from datetime import date
+import sys
+import json
+# Selenium gecko location and settings
+
+
+# Argparser
 currTime=str(time.time()).split(".")[0]
 
-default_code_file=str(currTime)+"By-AgencyCode"
+default_code_file=str(date.today())+"_"+str(currTime)+"By-AgencyCode"
 
-default_category_file=str(currTime)+"By-Category"
+default_category_file=str(date.today())+"_"+str(currTime)+"By-Category"
 
 default_job_file=str(date.today()) +"_"+currTime+"Job-Data"
 
@@ -17,12 +23,34 @@ parser.add_argument("-afile","--agencyfile",help="Agency JSON and CSV file names
 parser.add_argument("-cfile","--categoryfile", help="Category JSON and CSV file names.",
                     default=default_category_file)
 
-parser.add_argument("--scrapelinks", help="If set, runs scrape for all job links, after getting them from search.",
-                    action="store_true")
-parser.add_argument("-jobout","--joboutput", help="File of output JSON and CSV files for job links.",
+parser.add_argument("-jobout","--joboutput", help="Job Link JSON and CSV output files.",
                     default=default_job_file)
+                    
+parser.add_argument("-withlinks","--scrapejoblinks", help="If set, runs scrape for all job links, after getting them from search. Defaults to false",
+                    action="store_true")
+                          
+parser.add_argument("--nosearch", help="If set, skips scrape for search pages, by category and code. Defaults to false",
+                    action="store_true")
+
+parser.add_argument("-searchjson","--searchjsonfile", help="Job JSON file to use if --nosearch is set. Required with --nosearch")
 
 args = parser.parse_args()
+
+if args.nosearch:
+    if not args.searchjsonfile:
+        parser.error("When --nosearch is specified, --searchjson must be specified and valid.")
+    else:
+        try:
+            with open(args.searchjsonfile,"r") as testopen:
+                data=json.load(testopen)
+                if len(data) ==0:
+                    parser.error("File is empty")
+            args.scrapejoblinks=True
+
+        except Exception as e:
+            print(e)
+            sys.exit(1)
+
 
 # Category Checks
 linkSrchTemplate_Category="https://a127-jobs.nyc.gov/index_new.html?category={category}"
