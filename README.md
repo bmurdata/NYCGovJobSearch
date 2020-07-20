@@ -17,42 +17,42 @@ A Python based data scrape of https://www1.nyc.gov/jobs/index.page to provide he
    - Outputs to CSV and JSON, accepting custom names in the command line.
 # Usage and Examples
 ## Help file
-Run '''python jobcheck.py -h''' to get the following.
-usage: jobCheck.py [-h] [-afile AGENCYFILE] [-cfile CATEGORYFILE]
-                   [-jobout JOBOUTPUT] [-scrapelinks] [--nosearch]
-                   [-searchjson SEARCHJSONFILE]
+Run '''python jobcheck.py -h''' to get the following:  
+usage: jobCheck.py [-h] [-afile AGENCYFILE] [-cfile CATEGORYFILE]  
+                   [-jobout JOBOUTPUT] [-scrapelinks] [--nosearch]  
+                   [-searchjson SEARCHJSONFILE]  
 
 NYCGov Job site scraper. Outputs JSON and CSV files by job category and by
-specific agency.
+specific agency.  
 
-optional arguments:
-  -h, --help            show this help message and exit
-  -afile AGENCYFILE, --agencyfile AGENCYFILE
-                        Agency JSON and CSV file names.
-  -cfile CATEGORYFILE, --categoryfile CATEGORYFILE
-                        Category JSON and CSV file names.
-  -jobout JOBOUTPUT, --joboutput JOBOUTPUT
-                        Job Link JSON and CSV output files.
-  -withlinks, --scrapejoblinks
-                        If set, runs scrape for all job links, after getting
-                        them from search. Defaults to false
-  --nosearch            If set, skips scrape for search pages, by category and
-                        code. Defaults to false
-  -searchjson SEARCHJSONFILE, --searchjsonfile SEARCHJSONFILE
-                        Job JSON file to use if --nosearch is set. Required
-                        with --nosearch
+optional arguments:  
+  -h, --help            show this help message and exit  
+  -afile AGENCYFILE, --agencyfile AGENCYFILE  
+                        Agency JSON and CSV file names.  
+  -cfile CATEGORYFILE, --categoryfile CATEGORYFILE  
+                        Category JSON and CSV file names.  
+  -jobout JOBOUTPUT, --joboutput JOBOUTPUT  
+                        Job Link JSON and CSV output files.  
+  -withlinks, --scrapejoblinks  
+                        If set, runs scrape for all job links, after getting  
+                        them from search. Defaults to false  
+  --nosearch            If set, skips scrape for search pages, by category and  
+                        code. Defaults to false  
+  -searchjson SEARCHJSONFILE, --searchjsonfile SEARCHJSONFILE  
+                        Job JSON file to use if --nosearch is set. Required  
+                        with --nosearch  
 ## Examples
 - To run job search scrape, with automatically generated prefix filenames of YYYY-MM-DD_TIME. 
-- *Note* Will not scrape links by default.
- '''python jobCheck.py'''  
-- Custom filenames can be specified as well
- '''python jobCheck.py -afile AgencyFileName -cfile CategoryFileName'''  
-  Any unspecified options will be set to defaults.
-- To scrape joblinks after the search is scraped
- '''python jobCheck.py -withlinks -jobout JobDetailsInfo'''  
+- *Note* Will not scrape links by default.  
+ python jobCheck.py  
+- Custom filenames can be specified as well  
+ python jobCheck.py -afile AgencyFileName -cfile CategoryFileName  
+  Any unspecified options will be set to defaults.  
+- To scrape joblinks after the search is scraped  
+ python jobCheck.py -withlinks -jobout JobDetailsInfo  
   *Note* jobout is optional name for files.  
-- To run scrape of joblinks without scraping search
- '''python jobCheck.py --nosearch -searchjson AgencyJSONFile -jobout JobOutputFileName'''  
+- To run scrape of joblinks without scraping search  
+ python jobCheck.py --nosearch -searchjson AgencyJSONFile -jobout JobOutputFileName  
 
 # Installation and Setup
 
