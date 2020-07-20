@@ -5,7 +5,7 @@ A Python based data scrape of https://www1.nyc.gov/jobs/index.page to provide he
 
  This project provides a list of jobs from the NYC Jobs search site, grouped by category, agency, and more. In addition, it provides a direct link to jobs, something the website does not directly support. 
  
- In the main directory there are CSV files of the jobs by category, as well as agency code and name. Json files can be found in Datascraper folder, along with current project files.
+ In the main directory there are copies of CSV generated when program was last run. Json files can be found in Datascraper folder, along with current project files. Original CSVs are also there as well.
 
  The main project script(jobCheck.py) outputs JSON and CSV files.By default, it scrapes the job search pages for information on jobs, including links. Optionally, job links can then be scraped(referred to as Job or joblink scrapes) to get more information, as well as full details.
  
