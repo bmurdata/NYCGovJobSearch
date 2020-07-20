@@ -17,7 +17,7 @@ A Python based data scrape of https://www1.nyc.gov/jobs/index.page to provide he
    - Outputs to CSV and JSON, accepting custom names in the command line.
 # Usage and Examples
 ## Help file
-Run '''python jobcheck.py -h''' to get the following:  
+Run `python jobcheck.py -h` to get the following:  
 ```
 usage: jobCheck.py [-h] [-afile AGENCYFILE] [-cfile CATEGORYFILE]  
                    [-jobout JOBOUTPUT] [-scrapelinks] [--nosearch]  
@@ -41,7 +41,8 @@ optional arguments:
                         code. Defaults to false  
   -searchjson SEARCHJSONFILE, --searchjsonfile SEARCHJSONFILE  
                         Job JSON file to use if --nosearch is set. Required  
-                        with --nosearch  ```
+                        with --nosearch  
+```
 ## Examples
 - To run job search scrape, with automatically generated prefix filenames of YYYY-MM-DD_TIME. 
 - *Note* Will not scrape links by default.  
