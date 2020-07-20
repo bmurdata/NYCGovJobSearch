@@ -18,6 +18,7 @@ A Python based data scrape of https://www1.nyc.gov/jobs/index.page to provide he
 # Usage and Examples
 ## Help file
 Run '''python jobcheck.py -h''' to get the following:  
+```
 usage: jobCheck.py [-h] [-afile AGENCYFILE] [-cfile CATEGORYFILE]  
                    [-jobout JOBOUTPUT] [-scrapelinks] [--nosearch]  
                    [-searchjson SEARCHJSONFILE]  
@@ -40,27 +41,27 @@ optional arguments:
                         code. Defaults to false  
   -searchjson SEARCHJSONFILE, --searchjsonfile SEARCHJSONFILE  
                         Job JSON file to use if --nosearch is set. Required  
-                        with --nosearch  
+                        with --nosearch  ```
 ## Examples
 - To run job search scrape, with automatically generated prefix filenames of YYYY-MM-DD_TIME. 
 - *Note* Will not scrape links by default.  
- python jobCheck.py  
+ ```python jobCheck.py```  
 - Custom filenames can be specified as well  
- python jobCheck.py -afile AgencyFileName -cfile CategoryFileName  
+ ```python jobCheck.py -afile AgencyFileName -cfile CategoryFileName```  
   Any unspecified options will be set to defaults.  
 - To scrape joblinks after the search is scraped  
- python jobCheck.py -withlinks -jobout JobDetailsInfo  
+ ```python jobCheck.py -withlinks -jobout JobDetailsInfo```  
   *Note* jobout is optional name for files.  
 - To run scrape of joblinks without scraping search  
- python jobCheck.py --nosearch -searchjson AgencyJSONFile -jobout JobOutputFileName  
+ ```python jobCheck.py --nosearch -searchjson AgencyJSONFile -jobout JobOutputFileName```  
 
 # Installation and Setup
 
  Python 3.7 is required to run this project. You can do so from Python.org [here](https://www.python.org/downloads/). In addtion, make sure to have pip3 installed, and the Selenium Webdriver for Python.
 ## Selenium setup- Firefox
-By default, this project uses FireFox with Selenium Webdriver, and assumes you have a geckodriver. In the '''scrapermodule.py''', you can set its location with the '''gecko_Location''' variable, if it is not on PATH or in the same directory.
+By default, this project uses FireFox with Selenium Webdriver, and assumes you have a geckodriver. In the `scrapermodule.py`, you can set its location with the `gecko_Location` variable, if it is not on PATH or in the same directory.
 
-If you want to use a different brower, modify the '''scraperModule.py''' fireFox_setup() function to use a different browser, and changes the options. As long as the function returns a browser object, you should be good! 
+If you want to use a different brower, modify the `scraperModule.py` fireFox_setup() function to use a different browser, and changes the options. As long as the function returns a browser object, you should be good! 
 
 For more details on Selenium Drivers see [here](https://www.selenium.dev/documentation/en/webdriver/driver_requirements/)
 ## Dependency and environment management
