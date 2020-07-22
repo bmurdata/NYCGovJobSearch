@@ -9,12 +9,15 @@ A Python based data scrape of https://www1.nyc.gov/jobs/index.page to provide he
 
  The main project script(jobCheck.py) outputs JSON and CSV files.By default, it scrapes the job search pages for information on jobs, including links. Optionally, job links can then be scraped(referred to as Job or joblink scrapes) to get more information, as well as full details.
  
+ In addition, there is also a multithread version of scraping job link data, which is provided as an option for those who can take advantage of multiple threads. Once the job scrape is done, the command will automatically output the command to do this. This represents a large performance increase!
+
  Agency names were taken from [NYC Open Data Civil List](https://data.cityofnewyork.us/City-Government/Civil-List/ye3c-m4ga), by using the [SODA Api](https://dev.socrata.com/foundry/data.cityofnewyork.us/kpav-sd4t), which uses the SoQL SQL based query language.
  
  # Current Progress
    - Web scraping of search page, as well as following job links.  
    - Scraped jobs sorted by agency and agency code, in addition to category.
    - Outputs to CSV and JSON, accepting custom names in the command line.
+   - Implemented multithreading for the job link scrape.
 # Usage and Examples
 ## Help file
 Run `python jobcheck.py -h` to get the following:  
