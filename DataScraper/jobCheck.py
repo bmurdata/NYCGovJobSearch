@@ -9,13 +9,17 @@ from scraperModule import jsonToCSV
 from scraperModule import run_scrape
 from scrapeargs import args
 from scrapeargs import linkSrchTemplate_Category, linkSrchTemplate_Code, agency_codes, careerInterest
+import linkScrape_multithread
+import numpy
+from multiprocessing import Pool
+import traceback
 search_scrape="NA"
 job_scrape="NA"
 if not args.nosearch:
     # Run scraping and write to file 
     joblinkBase="https://a127-jobs.nyc.gov/psc/nycjobs/EMPLOYEE/HRMS/c/HRS_HRAM.HRS_APP_SCHJOB.GBL?Page=HRS_APP_JBPST&Action=U&FOCUS=Applicant&SiteId=1&JobOpeningId={jobId}&PostingSeq=1&"
 
-    print("Performin search scrape.")
+    print("Performing search scrape.")
     #Scrape by category
     category_jsonfile=(args.categoryfile.split(".",1)[0])+".json"
     category_csvfile=(args.categoryfile.split(".",1)[0])+".csv"
@@ -36,7 +40,7 @@ if not args.nosearch:
     print("------")
 
 if args.scrapejoblinks:
-    print("Preparing to run job scrape")
+    print("Preparing to run job scrape without multithreading.")
     job_jsonfile=(args.joboutput.split(".",1)[0]) +".json"
     job_csvfile=(args.joboutput.split(".",1)[0]) +".csv"
     
@@ -52,9 +56,10 @@ if args.scrapejoblinks:
     linkScrape.jobLinkScrape(jlinks,linkScrape.labels,job_jsonfile,job_details_file)
     linkScrape.writeJobtoCsv(job_jsonfile,job_csvfile)
     job_scrape=round(time.time()-start_time,2)
-    print("------")
-    print("Time to execute job scrape:{time}".format(time=job_scrape))
-    print("------")
+
+print("------")
+print("Time to execute job scrape:{time}".format(time=job_scrape))
+print("------")
 
 
 final_time=round(time.time()-start_time,2)
@@ -62,4 +67,10 @@ print("------")
 print("Time to execute search:{time}".format(time=search_scrape))
 print("Time to execute job scrape:{time}".format(time=job_scrape))
 print("Final time to execute:{time}".format(time=final_time))
+print("To perform job scrape with multithreading run the following:")
+try:
+    input_code_json=code_jsonfile 
+except:
+    input_code_json= args.searchjsonfile
+print("python .\linkScrape_multithread.py --joblinkfile "+ str(input_code_json))
 print("------")

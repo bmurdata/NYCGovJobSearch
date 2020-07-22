@@ -32,6 +32,9 @@ parser.add_argument("-withlinks","--scrapejoblinks", help="If set, runs scrape f
 parser.add_argument("--nosearch", help="If set, skips scrape for search pages, by category and code. Defaults to false",
                     action="store_true")
 
+parser.add_argument("--multithread", help="Optional. If set, scrape of job links in multithread mode.",
+                    action="store_true")
+
 parser.add_argument("-searchjson","--searchjsonfile", help="Job JSON file to use if --nosearch is set. Required with --nosearch")
 
 args = parser.parse_args()
