@@ -4,7 +4,7 @@ import csv
 #Location of Geck Driver
 import time
 import json
-
+start_time=time.time()
 import argparse
 import sys
 from datetime import date
@@ -125,14 +125,30 @@ def pulljoblinks(jobfile):
     print("There are :"+str(len(joblinks)))
     return joblinks
 
+def test_file_json_write(jobJson,job_detail,job_json,job_details_json):
+    try:
+        with open(job_json, "w") as jsout:
+                json.dump(jobJson,jsout,indent=4)
+
+        with open(job_details_json, "w") as detailsout:
+            json.dump(job_detail,detailsout,indent=4)
+        
+    except Exception as e:
+        traceback.print_exc()
 if __name__== "__main__":
-    jsonout=str(date.today())+str(time.time()).split(".")[0]+"JSON.json"
-    csvout=str(date.today())+str(time.time()).split(".")[0]+"CSV.csv"
+    baseFile="NORMAL_"+str(date.today())+str(time.time()).split(".")[0]
+
+    jsonout=baseFile+"JSON.json"
+    csvout=baseFile+"CSV.csv"
     # jobFile="AgencyJson.json"
-    jobFile="TEST.json"
+    jobFile="JUL21-Agency_TEST.json"
     joblinks=pulljoblinks(jobFile)
     print(str(len(joblinks)))
-    detailsF="dinner"
+    detailsF="NORMAL_DEETS"
     jobLinkScrape(joblinks,labels,jsonout,detailsF)
 
+   # test_file_json_write(jobs,details,jsonout,job_details_json)
     writeJobtoCsv(jsonout,csvout)
+    final_time=round(time.time()-start_time,2)
+    print("Final time to execute:{time}".format(time=final_time))
+    print("------")

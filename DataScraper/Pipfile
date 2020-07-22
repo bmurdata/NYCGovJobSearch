@@ -9,6 +9,7 @@ pylint = "*"
 [packages]
 selenium = "*"
 pyodbc = "*"
+numpy = "*"
 
 [requires]
 python_version = "3.7"
