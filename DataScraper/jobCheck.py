@@ -9,7 +9,7 @@ from scraperModule import jsonToCSV
 from scraperModule import run_scrape
 from scrapeargs import args
 from scrapeargs import linkSrchTemplate_Category, linkSrchTemplate_Code, agency_codes, careerInterest
-import linkScrape_multithread
+
 import numpy
 from multiprocessing import Pool
 import traceback
