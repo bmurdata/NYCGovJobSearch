@@ -8,9 +8,11 @@ from multiprocessing import Pool
 from multiprocessing import cpu_count
 import argparse
 import sys
+from datetime import datetime
 from datetime import date
 import numpy
 import argparse
+import re
 parser = argparse.ArgumentParser(description="Multithread implementation of the job link scraper.")
 parser.add_argument("--joblinkfile", help="JSON file to get links from.")
 
@@ -61,7 +63,7 @@ def writeJobtoCsv(jsonfile,jobcsv):
 
             header=keydict#myLabels.labels#data[0].keys()
          
-            with open(jobcsv,"w",newline='') as ofile:
+            with open(jobcsv,"w",newline='',encoding="utf-8") as ofile:
                 csv_write=csv.writer(ofile)
                 csv_write.writerow(header)
                 for job in data:
@@ -104,8 +106,14 @@ def scrape_multi_arr(jobllinks):
                 sys.stdout.write("On click: "+str(numclicks))
                 sys.stdout.flush()
             for i in range(0,len(dispData)):
-                current_job[myLabels.labels[i]] = dispData[i].get_attribute('innerText') if dispData[i].get_attribute('innerText') is not "\u00a0" else "Not Listed"
-            
+                r=re.compile(".[0-9]/.[0-9]/.*")
+                if r.match(dispData[i].get_attribute('innerText')):
+                    print("Date found")
+                    current_job[myLabels.labels[i]] = datetime.strptime(dispData[i].get_attribute('innerText'), "%m/%d/%Y").strftime("%Y-%m-%d") if dispData[i].get_attribute('innerText') is not "\u00a0" else "Not Listed"
+                
+                else:
+                    current_job[myLabels.labels[i]] =dispData[i].get_attribute('innerText') if dispData[i].get_attribute('innerText') is not "\u00a0" else "Not Listed"
+                    
             jobJson.append(current_job)
 
     except Exception as e:
@@ -124,8 +132,28 @@ def test_file_json_write(jobJson,job_detail,job_json,job_details_json):
         with open(job_json, "w") as jsout:
                 json.dump(jobJson,jsout,indent=4)
 
+        details_order=["Job Description",
+        "Minimum Qual Requirements",
+        "Preferred Skills",
+        "Additional Information",
+        "To Apply",
+        "Hours/Shift",
+        "Work Location",
+        "Residency Requirement",
+        "Recruitment Contact",
+        "jobNum"]
+        sorted_job_details=[]
+        for job in job_detail:
+            for detail in details_order:
+                if not detail in job:
+                    job[detail]="Not Found"
+            #Sort the dictionary by keys
+            
+            sorted_job=dict(sorted(job.items()))
+            sorted_job_details.append(sorted_job)
+        
         with open(job_details_json, "w") as detailsout:
-            json.dump(job_detail,detailsout,indent=4)
+            json.dump(sorted_job_details,detailsout,indent=4)
         
     except Exception as e:
         traceback.print_exc()

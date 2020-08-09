@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
-
+import datetime 
 import time
 import json
 import sys
@@ -84,7 +84,7 @@ def selScrape(careerInterest,badCareer,linkSrchTest,browser,linkBase):
 
                     for pairs in splitattri:
                         attribute_Value[pairs[0].strip()]=pairs[1].strip()
-                        numItems +=1
+                    numItems +=1
                     
                     jsondata[jobcat].append({
                             'jobNum': jobNum,
@@ -96,7 +96,7 @@ def selScrape(careerInterest,badCareer,linkSrchTest,browser,linkBase):
                             'Department':attribute_Value['Department'] if 'Department' in attribute_Value else "Not Listed", # Department
                             'Agency':attribute_Value['Agency'] if 'Agency' in attribute_Value else "Not Listed", # Location
                             'Location':attribute_Value['Location'] if 'Location' in attribute_Value else "Not Listed", # Agency
-                            'Posted_Date':attribute_Value['Posted Date'] if 'Posted Date' in attribute_Value else "Not Listed", # Posted Date
+                            'Posted_Date':datetime.datetime.strptime(attribute_Value['Posted Date'], "%m/%d/%Y").strftime("%Y-%m-%d") if 'Posted Date' in attribute_Value else "Not Listed", # Posted Date
                         })
                     
 
@@ -151,13 +151,13 @@ def writeJson(jsondata,fileToWrite):
 
 def jsonToCSV(jsonfile,jobcsv):
 
-    with open(jobcsv,"w") as initial:
+    with open(jobcsv,"w",newline='',encoding="utf-8") as initial:
         initial.write("jobNum,title,Link,shortCategory,longCategory,Department,Location,Agency,Posted Date\n")
         
     with open(jsonfile) as ifile:
         data=json.load(ifile)
         num=0
-        with open(jobcsv,"a") as jobs:
+        with open(jobcsv,"a",newline='',encoding="utf-8") as jobs:
 
             for category in data:
                 

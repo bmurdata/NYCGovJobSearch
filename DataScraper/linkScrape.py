@@ -46,7 +46,7 @@ def writeJobtoCsv(jsonfile,jobcsv):
             data=json.load(ifile)
             header=data[0].keys()
          
-            with open(jobcsv,"w",newline='') as ofile:
+            with open(jobcsv,"w",newline='',encoding="utf-8") as ofile:
                 csv_write=csv.writer(ofile)
                 csv_write.writerow(header)
                 for job in data:
