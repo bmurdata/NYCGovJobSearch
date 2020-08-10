@@ -119,6 +119,18 @@
                 "Agency": "ADMIN FOR CHILDREN'S SVCS",
                 "Location": "MANHATTAN",
                 "Posted_Date": "10/09/2019"
-            }
+            },
+			{
+            "jobNum": "378979",
+            "title": "Assistant Director of Psychiatry - 378979",
+            "link": "https://a127-jobs.nyc.gov/psc/nycjobs/EMPLOYEE/HRMS/c/HRS_HRAM.HRS_APP_SCHJOB.GBL?Page=HRS_APP_JBPST&Action=U&FOCUS=Applicant&SiteId=1&JobOpeningId=378979&PostingSeq=1&",
+            "shortcategory": "067",
+            "longcategory": "ADMINISTRATION FOR CHILDRE",
+            "jobAttributes": "Department: Office Of Chld & Fmly Health | Location: NYC-ALL BOROS | Agency: ADMIN FOR CHILDREN'S SVCS | Posted Date: 08/03/2020",
+            "Department": "Office Of Chld & Fmly Health",
+            "Agency": "ADMIN FOR CHILDREN'S SVCS",
+            "Location": "NYC-ALL BOROS",
+            "Posted_Date": "2020-08-03"
+        }
     ]
 }

@@ -107,12 +107,15 @@ def scrape_multi_arr(jobllinks):
                 sys.stdout.flush()
             for i in range(0,len(dispData)):
                 r=re.compile(".[0-9]/.[0-9]/.*")
+                
                 if r.match(dispData[i].get_attribute('innerText')):
                     print("Date found")
-                    current_job[myLabels.labels[i]] = datetime.strptime(dispData[i].get_attribute('innerText'), "%m/%d/%Y").strftime("%Y-%m-%d") if dispData[i].get_attribute('innerText') is not "\u00a0" else "Not Listed"
-                
+                    current_job[myLabels.labels[i]] = datetime.strptime(dispData[i].get_attribute('innerText'), "%m/%d/%Y").strftime("%Y-%m-%d") if dispData[i].get_attribute('innerText') and dispData[i].get_attribute('innerText') is not "\u00a0" else "Not Listed"
+                elif dispData[i].get_attribute('innerText')=="Until Filled":
+                    current_job[myLabels.labels[i]]="3020-01-01"
+
                 else:
-                    current_job[myLabels.labels[i]] =dispData[i].get_attribute('innerText') if dispData[i].get_attribute('innerText') is not "\u00a0" else "Not Listed"
+                    current_job[myLabels.labels[i]] =dispData[i].get_attribute('innerText') if dispData[i].get_attribute('innerText') and dispData[i].get_attribute('innerText') is not "\u00a0" else "Not Listed"
                     
             jobJson.append(current_job)
 
