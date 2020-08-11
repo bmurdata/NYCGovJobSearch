@@ -15,9 +15,10 @@ import argparse
 import re
 parser = argparse.ArgumentParser(description="Multithread implementation of the job link scraper.")
 parser.add_argument("--joblinkfile", help="JSON file to get links from.")
+parser.add_argument("-pc","--threadnum", type=int,help="How many parallel processes to spawn. Default is cpu count.",default=cpu_count())
 
 args = parser.parse_args()
-
+print(sys.argv[1:])
 class myLabels:
 
     labels=["Job_ID",
@@ -109,7 +110,6 @@ def scrape_multi_arr(jobllinks):
                 r=re.compile(".[0-9]/.[0-9]/.*")
                 
                 if r.match(dispData[i].get_attribute('innerText')):
-                    print("Date found")
                     current_job[myLabels.labels[i]] = datetime.strptime(dispData[i].get_attribute('innerText'), "%m/%d/%Y").strftime("%Y-%m-%d") if dispData[i].get_attribute('innerText') and dispData[i].get_attribute('innerText') is not "\u00a0" else "Not Listed"
                 elif dispData[i].get_attribute('innerText')=="Until Filled":
                     current_job[myLabels.labels[i]]="3020-01-01"
@@ -221,6 +221,8 @@ if __name__== "__main__":
 
     start=time.time()
     jobFile=args.joblinkfile
+    numprocesses=args.threadnum
+    print("You will have: "+str(numprocesses)+" parallel threads.")
     base=str(date.today())+str(time.time()).split(".")[0]
     #run_multi_scrape(start,jobFile,base)
     start_time=time.time()
@@ -231,12 +233,12 @@ if __name__== "__main__":
     #jobFile="TEST_2.json"
     joblinks_raw=pulljoblinks(jobFile)
     print(str(len(joblinks_raw)))
-    joblinks=numpy.array_split(numpy.array(joblinks_raw),10)
+    joblinks=numpy.array_split(numpy.array(joblinks_raw),numprocesses)
 
     job_details_csv=baseFile+"-Details.csv"
     job_details_json=baseFile+"-Details.json"
-    num_workers = cpu_count()
-    with Pool(10) as p:
+    num_workers = int(numprocesses)
+    with Pool(num_workers) as p:
         results_tuple=p.map(scrape_multi_arr,joblinks,1)
     jobs=[]
     details=[]
