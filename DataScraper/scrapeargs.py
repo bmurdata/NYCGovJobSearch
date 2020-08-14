@@ -37,7 +37,7 @@ parser.add_argument("-searchjson","--searchjsonfile", help="Job JSON file to use
 
 print(sys.argv[1:])
 args = parser.parse_args()
-print("adsasd")
+
 
 
 if args.nosearch:

@@ -9,27 +9,31 @@ from scraperModule import jsonToCSV
 from scraperModule import run_scrape
 from scrapeargs import args
 from scrapeargs import linkSrchTemplate_Category, linkSrchTemplate_Code, agency_codes, careerInterest
-
+import os 
 import numpy
 from multiprocessing import Pool
 import traceback
 search_scrape="NA"
 job_scrape="NA"
+dir_path = os.path.dirname(os.path.realpath(__file__))+"/output/"
 if not args.nosearch:
+    # Location to put files
+    
+
     # Run scraping and write to file 
     joblinkBase="https://a127-jobs.nyc.gov/psc/nycjobs/EMPLOYEE/HRMS/c/HRS_HRAM.HRS_APP_SCHJOB.GBL?Page=HRS_APP_JBPST&Action=U&FOCUS=Applicant&SiteId=1&JobOpeningId={jobId}&PostingSeq=1&"
 
     print("Performing search scrape.")
     #Scrape by category
-    category_jsonfile=(args.categoryfile.split(".",1)[0])+".json"
-    category_csvfile=(args.categoryfile.split(".",1)[0])+".csv"
+    category_jsonfile=dir_path+(args.categoryfile.split(".",1)[0])+".json"
+    category_csvfile=dir_path+(args.categoryfile.split(".",1)[0])+".csv"
 
     #careerInterest={"Administration and Human Resources":"CAS"}
     run_scrape(category_jsonfile,careerInterest,linkSrchTemplate_Category,joblinkBase,category_csvfile)
 
     #Scrape by Code
-    code_jsonfile=(args.agencyfile.split(".",1)[0]) + ".json"
-    code_csvfile=(args.agencyfile.split(".",1)[0]) +".csv"
+    code_jsonfile=dir_path+(args.agencyfile.split(".",1)[0]) + ".json"
+    code_csvfile=dir_path+(args.agencyfile.split(".",1)[0]) +".csv"
 
     #agency_codes={"ADMINISTRATION FOR CHILDRE": "067", "CUNY BRONX COMMUNITY COLLE": "463"}
     run_scrape(code_jsonfile,agency_codes,linkSrchTemplate_Code,joblinkBase,code_csvfile)
@@ -41,10 +45,10 @@ if not args.nosearch:
 
 if args.scrapejoblinks:
     print("Preparing to run job scrape without multithreading.")
-    job_jsonfile=(args.joboutput.split(".",1)[0]) +".json"
-    job_csvfile=(args.joboutput.split(".",1)[0]) +".csv"
+    job_jsonfile=dir_path+(args.joboutput.split(".",1)[0]) +".json"
+    job_csvfile=dir_path+(args.joboutput.split(".",1)[0]) +".csv"
     
-    job_details_file=(args.joboutput.split(".",1)[0]) +"-Details"
+    job_details_file=dir_path+(args.joboutput.split(".",1)[0]) +"-Details"
     
     import linkScrape
     try:
