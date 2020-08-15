@@ -16,11 +16,11 @@ import re
 import os
 # Where files should be placed
 dir_path = os.path.dirname(os.path.realpath(__file__))+"/output/"
-
+defaultfname=str(date.today())+str(time.time()).split(".")[0]
 parser = argparse.ArgumentParser(description="Multithread implementation of the job link scraper.")
 parser.add_argument("--joblinkfile", help="JSON file to get links from.")
 parser.add_argument("-pc","--threadnum", type=int,help="How many parallel processes to spawn. Default is cpu count.",default=cpu_count())
-
+parser.add_argument("-ofile","--outfile",help="Output file names",default=defaultfname)
 args = parser.parse_args()
 # print(sys.argv[1:])
 class myLabels:
@@ -192,10 +192,10 @@ if __name__== "__main__":
     jobFile=args.joblinkfile
     numprocesses=args.threadnum
     print("You will have: "+str(numprocesses)+" parallel threads.")
-    base=str(date.today())+str(time.time()).split(".")[0]
+    base=args.outfile
     #run_multi_scrape(start,jobFile,base)
     start_time=time.time()
-    baseFile=dir_path+"MULTITHREAD_"+str(date.today())+str(time.time()).split(".")[0]
+    baseFile=dir_path+"MULTITHREAD_"+base
     jsonout=baseFile+"JSON.json"
     csvout=baseFile+"CSV.csv"
 
