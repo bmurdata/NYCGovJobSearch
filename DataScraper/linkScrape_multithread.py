@@ -106,7 +106,7 @@ def scrape_multi_arr(jobllinks):
             browser.get(link[0])
             numclicks +=1
             dispData=browser.find_elements_by_class_name("PSEDITBOX_DISPONLY")
-            print("Display Data has "+str(len(dispData)))
+            
             try:
                 agency_title=browser.find_element_by_id("HRS_BS_UNT_HR_I_DESCR").get_attribute('innerText')
             except:
@@ -123,9 +123,14 @@ def scrape_multi_arr(jobllinks):
                 sys.stdout.write("On click: "+str(numclicks))
                 sys.stdout.flush()
             if len(dispData)==0:
-                print("Only three items in the thing")
+                
                 for i in myLabels.labels:
-                    current_job[i]="Not Found"
+                    if i=="Job_ID" or i=="Num_of_Positions":
+                        current_job[i]="0"
+                    elif i=="Posted" or i=="Post_Until":
+                        current_job[i]="3020-12-12"
+                    else:
+                        current_job[i]="Not Found"
             else:
                 for i in range(0,len(dispData)):
                     r=re.compile(".[0-9]/.[0-9]/.*")
