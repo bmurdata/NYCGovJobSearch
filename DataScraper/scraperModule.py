@@ -14,7 +14,7 @@ import json
 import sys
 # Selenium Setup
 options = webdriver.FirefoxOptions()
-#options.add_argument('-headless')
+options.add_argument('-headless')
 gecko_Location='./geckodriver.exe'
 
 # Setup of browser
