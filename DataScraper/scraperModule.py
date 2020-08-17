@@ -7,23 +7,28 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.common.exceptions import TimeoutException
 import datetime 
 import time
 import json
 import sys
 # Selenium Setup
 options = webdriver.FirefoxOptions()
-options.add_argument('-headless')
+#options.add_argument('-headless')
 gecko_Location='./geckodriver.exe'
 
 # Setup of browser
 def fireFox_setup():
     try:
         browser=webdriver.Firefox(options=options)
+        browser.set_page_load_timeout(90)
     except:
         print("Switching to use selpysettings")
         try:
-            browser = webdriver.Firefox(executable_path=gecko_Location,options=options)    
+            
+            browser = webdriver.Firefox(executable_path=gecko_Location,options=options)
+            browser.set_page_load_timeout(90)
+
         except Exception as e:
             print(e)
             exit()
@@ -35,9 +40,13 @@ def selScrape(careerInterest,badCareer,linkSrchTest,browser,linkBase):
     itemcount=0
 
     for longcat,cat in careerInterest.items():
+        try:
+            browser.get(linkSrchTest.format(category=cat))
+        except TimeoutException as e:
+            print("Page took too long to load for "+longcat+". Continuing...")
+            
+            continue
         
-        browser.get(linkSrchTest.format(category=cat))
-        itemcount +=1
 
         try:
             print("Trying to open page for "+longcat)
