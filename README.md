@@ -1,6 +1,8 @@
 # NYCGovJobSearch
 A Python based data scrape of https://www1.nyc.gov/jobs/index.page to provide help those seeking a career in civil service.
 
+Website implementation of this data(WIP) can be seen here- https://www.murphy-dev.com
+
 # About
 
  This project provides a list of jobs from the NYC Jobs search site, grouped by category, agency, and more. In addition, it provides a direct link to jobs, something the website does not directly support. 
@@ -97,6 +99,4 @@ For dependency and environment management, this project uses [pipenv](https://pi
    - Refine the Job link details JSON  
    - Update support for SQL Server.  
    - Create SQL output file. (low priority)
-# Future
-   - Website to display information and provide searches, along with updates.
 
