@@ -15,7 +15,7 @@ import sys
 # Selenium Setup
 options = webdriver.FirefoxOptions()
 options.add_argument('-headless')
-gecko_Location='./geckodriver.exe'
+gecko_Location='./geckodrivers/geckodriver.exe'
 
 # Setup of browser
 def fireFox_setup():
@@ -30,6 +30,7 @@ def fireFox_setup():
             browser.set_page_load_timeout(90)
 
         except Exception as e:
+            print("FireFox Geckodriver not found. Either add it to PATH or to the geckodrivers folder. Alternatively, edit the scraperModule.py file gecko_Location variable.")
             print(e)
             exit()
     return browser
