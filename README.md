@@ -7,7 +7,7 @@ Website implementation of this data(WIP) can be seen here- https://www.murphy-de
 
  This project provides a list of jobs from the NYC Jobs search site, grouped by category, agency, and more. In addition, it provides a direct link to jobs, something the website does not directly support. 
  
- In the main directory there are copies of CSV generated when program was last run. Json files can be found in Datascraper folder, along with current project files. Original CSVs are also there as well.
+ Sample CSV files are in sample_Outputs folder. Sample JSON files are provided in DataScraper.
 
  The main project script(jobCheck.py) outputs JSON and CSV files.By default, it scrapes the job search pages for information on jobs, including links. Optionally, job links can then be scraped(referred to as Job or joblink scrapes) to get more information, as well as full details.
  
@@ -57,8 +57,8 @@ optional arguments:
   Any unspecified options will be set to defaults.  
 - To scrape joblinks after the search is scraped  
  ```python jobCheck.py -withlinks -jobout JobDetailsInfo```  
-  *Note* jobout is optional name for files.  
-- To run scrape of joblinks without scraping search  
+  *Note* jobout is an optional name for files.  
+- To run scrape of joblinks *without* scraping the search site  
  ```python jobCheck.py --nosearch -searchjson AgencyJSONFile -jobout JobOutputFileName```  
 
 # Installation and Setup
