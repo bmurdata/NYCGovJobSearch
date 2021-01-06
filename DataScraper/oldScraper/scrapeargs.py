@@ -4,7 +4,7 @@ from datetime import date
 import sys
 import json
 # Selenium gecko location and settings
-gecko_Location='./geckodrivers/geckodriver.exe'
+
 
 # Argparser
 currTime=str(time.time()).split(".")[0]
@@ -37,6 +37,8 @@ parser.add_argument("-searchjson","--searchjsonfile", help="Job JSON file to use
 
 print(sys.argv[1:])
 args = parser.parse_args()
+
+
 
 if args.nosearch:
     if not args.searchjsonfile:

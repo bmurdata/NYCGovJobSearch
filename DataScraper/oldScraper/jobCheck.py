@@ -8,7 +8,7 @@ from scraperModule import writeJson
 from scraperModule import jsonToCSV
 from scraperModule import run_scrape
 from scrapeargs import args
-from scrapeargs import linkSrchTemplate_Category, linkSrchTemplate_Code, agency_codes, careerInterest,joblinkBase
+from scrapeargs import linkSrchTemplate_Category, linkSrchTemplate_Code, agency_codes, careerInterest
 import os 
 import numpy
 from multiprocessing import Pool
@@ -21,7 +21,8 @@ if not args.nosearch:
     
 
     # Run scraping and write to file 
-    
+    joblinkBase="https://a127-jobs.nyc.gov/psc/nycjobs/EMPLOYEE/HRMS/c/HRS_HRAM.HRS_APP_SCHJOB.GBL?Page=HRS_APP_JBPST&Action=U&FOCUS=Applicant&SiteId=1&JobOpeningId={jobId}&PostingSeq=1&"
+
     print("Performing search scrape.")
     #Scrape by category
     category_jsonfile=dir_path+(args.categoryfile.split(".",1)[0])+".json"
