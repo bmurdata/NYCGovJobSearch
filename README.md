@@ -1,4 +1,5 @@
 # NYCGovJobSearch
+# *NOTE*: Deprecated due to updates to website. Fix in progress.
 A Python based data scrape of https://www1.nyc.gov/jobs/index.page to provide help those seeking a career in civil service.
 
 Website implementation of this data(WIP) can be seen here- https://www.murphy-dev.com
