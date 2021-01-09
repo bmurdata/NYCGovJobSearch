@@ -48,7 +48,7 @@ parser.add_argument("-searchjson","--searchjsonfile", help="Job JSON file to use
 
 print(sys.argv[1:])
 args = parser.parse_args()
-
+# If you have a JSON job file to search
 if args.nosearch:
     if not args.searchjsonfile:
         parser.error("When --nosearch is specified, --searchjson must be specified and valid.")
@@ -90,23 +90,13 @@ if not args.nosearch:
     print("------")
     print("Time to execute search:{time}".format(time=search_scrape))
     print("------")
-
+# TO-DO: rewrite, run job link scrape without multithreading. joblinkscrape module
 if args.scrapejoblinks:
     print("Preparing to run job scrape without multithreading.")
     job_jsonfile=dir_path+(args.joboutput.split(".",1)[0]) +".json"
     job_csvfile=dir_path+(args.joboutput.split(".",1)[0]) +".csv"
     
     job_details_file=dir_path+(args.joboutput.split(".",1)[0]) +"-Details"
-    
-    import linkScrape
-    try:
-        input_code_json=code_jsonfile 
-    except:
-        input_code_json= args.searchjsonfile
-
-    jlinks=linkScrape.pulljoblinks(input_code_json)
-    linkScrape.jobLinkScrape(jlinks,linkScrape.labels,job_jsonfile,job_details_file)
-    linkScrape.writeJobtoCsv(job_jsonfile,job_csvfile)
     job_scrape=round(time.time()-start_time,2)
 
 print("------")

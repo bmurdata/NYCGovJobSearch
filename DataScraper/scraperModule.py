@@ -9,6 +9,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import TimeoutException
 import datetime 
+from datetime import date
 import time
 import json
 import sys
@@ -36,7 +37,7 @@ def fireFox_setup():
             exit()
     return browser
 
-
+# Scrape for job information, and links
 def selScrape(criteria_Dict,badCareer,jobSource,directJobLink):
     try:
         browser=fireFox_setup()
@@ -94,8 +95,33 @@ def selScrape(criteria_Dict,badCareer,jobSource,directJobLink):
                 print(e)
                 badCareer[longcat]=cat
     print("All done")
-    print(allJobs_Dict)
+    # print(allJobs_Dict)
     return allJobs_Dict
+# Writes Json and CSV files
+def writeToFiles(jsondata,jsonFile,csvFile):
+    if jsondata:
+        # Write JSON to the JSON file
+        try:
+            with open(jsonFile, "w") as myfile:
+                print("Preparing to write file ")
+                json.dump(jsondata,myfile,indent=4)
+        
+        except Exception as e:
+            print("Failed to write to file")
+            print(str(e))
+
+        # Write JSON data to CSV
+
+        with open(csvFile,"w",newline='',encoding="utf-8") as initial:
+            initial.write("JobID,Title,Link,shortCategory,longCategory,Department,Location,Agency,Posted Date\n")
+            
+        with open(csvFile,"a",newline='',encoding="utf-8") as jobs:
+
+            for category in jsondata:
+                for item in jsondata[category]:
+                    new_record="\""+item['jobNum'] +"\",\""+item['title']+"\",\""+item['link']+"\",\""+item['shortcategory']+"\",\""+item['longcategory'] +"\",\""+item['Department']+"\",\""+item['Location']+"\",\""+item['Agency']+"\",\""+item['Posted_Date']+"\"\n"
+                    jobs.write(new_record)
+                        
 
 # Main entry point. Runs the scrape
 def run_scrape(jsonfile,searchCriteria,linkTemplate,jobLinkTemplate,csvfile):
@@ -156,13 +182,23 @@ if __name__=='__main__':
     print("Preparing for the worst")
     start_time=time.time()
     joblinkBase="https://a127-jobs.nyc.gov/psc/nycjobs/EMPLOYEE/HRMS/c/HRS_HRAM.HRS_APP_SCHJOB.GBL?Page=HRS_APP_JBPST&Action=U&FOCUS=Applicant&SiteId=1&JobOpeningId={jobId}&PostingSeq=1&"
+
+    currTime=str(time.time()).split(".")[0]
+
+    default_code_file=str(date.today())+"_"+str(currTime)+"By-AgencyCode"
+
+    default_category_file=str(date.today())+"_"+str(currTime)+"By-Category"
+
+    default_job_file=str(date.today()) +"_"+currTime+"Job-Data"
     #Agency Codes
     code_linkSrchTemplate="https://a127-jobs.nyc.gov/index_new.html?agency={category}"
 
     agency_codesTest={"Police Department": "056","Health or Something":"816"}
     badCareer={}
-    selScrape(agency_codesTest,badCareer,code_linkSrchTemplate,jobLinkTemplate)
+    jobs=selScrape(agency_codesTest,badCareer,code_linkSrchTemplate,jobLinkTemplate)
 
+    writeToFiles(jobs,default_code_file+".json",default_code_file+".csv")
+    # print(jobs)
     #Category
     cat_linkSrchTemplate="https://a127-jobs.nyc.gov/index_new.html?category={category}"
 
