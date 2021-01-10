@@ -1,16 +1,16 @@
 import time
+import argparse
 start_time=time.time()
 import sys
 import scraperModule
 from scraperModule import selScrape
 from scraperModule import fireFox_setup
-from scraperModule import writeJson
-from scraperModule import jsonToCSV
 from scraperModule import run_scrape
 # from scrapeargs import args
 from scrapeargs import linkSrchTemplate_Category, linkSrchTemplate_Code, agency_codes, careerInterest,jobLinkTemplate
 import os 
 import numpy
+from datetime import date
 from multiprocessing import Pool
 import traceback
 search_scrape="NA"
@@ -66,24 +66,24 @@ if args.nosearch:
             sys.exit(1)
 
 if not args.nosearch:
-    # Location to put files
     
-
     # Run scraping and write to file 
     
     print("Performing search scrape.")
-    #Scrape by category
-    category_jsonfile=dir_path+(args.categoryfile.split(".",1)[0])+".json"
-    category_csvfile=dir_path+(args.categoryfile.split(".",1)[0])+".csv"
+    # Scrape by category
+    # Location to put files
+    # category_jsonfile=dir_path+(args.categoryfile.split(".",1)[0])+".json"
+    # category_csvfile=dir_path+(args.categoryfile.split(".",1)[0])+".csv"
 
-    #careerInterest={"Administration and Human Resources":"CAS"}
-    run_scrape(category_jsonfile,careerInterest,linkSrchTemplate_Category,jobLinkTemplate,category_csvfile)
+    # careerInterest={"Administration and Human Resources":"CAS"}
+    # run_scrape(category_jsonfile,careerInterest,linkSrchTemplate_Category,jobLinkTemplate,category_csvfile)
 
-    #Scrape by Code
+    # Scrape by Agency Code
+    # Location to put files
     code_jsonfile=dir_path+(args.agencyfile.split(".",1)[0]) + ".json"
     code_csvfile=dir_path+(args.agencyfile.split(".",1)[0]) +".csv"
 
-    #agency_codes={"ADMINISTRATION FOR CHILDRE": "067", "CUNY BRONX COMMUNITY COLLE": "463"}
+    # agency_codes={"ADMINISTRATION FOR CHILDRE": "067", "CUNY BRONX COMMUNITY COLLE": "463"}
     run_scrape(code_jsonfile,agency_codes,linkSrchTemplate_Code,jobLinkTemplate,code_csvfile)
 
     search_scrape=round(time.time()-start_time,2)

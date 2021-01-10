@@ -12,8 +12,8 @@ import datetime
 from datetime import date
 import time
 import json
-import sys
-from scrapeargs import gecko_Location,jobLinkTemplate
+import sys, os
+from scrapeargs import gecko_Location,jobLinkTemplate,agency_codes
 # Selenium Setup
 options = webdriver.FirefoxOptions()
 options.add_argument('-headless')
@@ -48,13 +48,19 @@ def selScrape(criteria_Dict,badCareer,jobSource,directJobLink):
     allJobs_Dict={}
     for longcat,cat in criteria_Dict.items():
         allJobs_Dict[cat]=list()
+        print("Trying to find  "+ longcat)
 
-        browser.get(jobSource.format(category=cat))
+        try:
+            browser.get(jobSource.format(category=cat))
+        except:
+            print(e)
+            badCareer[longcat]=cat
+            continue
         try:
             browser.find_element_by_css_selector(".ps_box-more")
             failover=False
         except Exception as e:
-            print("No scroll action to take")
+            print("No scroll action to take at "+longcat)
             failover=True
         if failover==False:
             # Failsafe to prevent refreshes from lasting too long. Based on the idea that it can load at most 20 results.
@@ -65,9 +71,10 @@ def selScrape(criteria_Dict,badCareer,jobSource,directJobLink):
                     browser.execute_script("submitAction_win0(document.win0,'HRS_AGNT_RSLT_I$hdown$0')")
                     time.sleep(2)
                     x=x+1
-                    print(x)
+                    
                 except Exception as e:
                     print(e)
+                    print("Stopped for "+longcat+" at scroll "+str(x))
                     x=20
         print("Looking for the jobs")
         # List of all the jobs
@@ -93,12 +100,15 @@ def selScrape(criteria_Dict,badCareer,jobSource,directJobLink):
 
             except Exception as e:
                 print(e)
+                print("Failed at getting job for fullList at "+job.get_attribute('innerText'))
                 badCareer[longcat]=cat
     print("All done")
     # print(allJobs_Dict)
+    browser.quit()
     return allJobs_Dict
 # Writes Json and CSV files
 def writeToFiles(jsondata,jsonFile,csvFile):
+    
     if jsondata:
         # Write JSON to the JSON file
         try:
@@ -128,10 +138,9 @@ def run_scrape(jsonfile,searchCriteria,linkTemplate,jobLinkTemplate,csvfile):
     badSearch={}
     try:
 
-        firstPass=selScrape(searchCriteria,badSearch,linkTemplate,browser,jobLinkTemplate)
+        firstPass=selScrape(searchCriteria,badSearch,linkTemplate,jobLinkTemplate)
     except Exception as e:
         print("Failed due to "+ str(e))
-        browser.quit()
 
     stillBad={}
 
@@ -139,7 +148,7 @@ def run_scrape(jsonfile,searchCriteria,linkTemplate,jobLinkTemplate,csvfile):
     if badSearch:
         try:
             browser=fireFox_setup()
-            secondPass=selScrape(badSearch,stillBad,linkTemplate,browser,jobLinkTemplate)
+            secondPass=selScrape(badSearch,stillBad,linkTemplate,jobLinkTemplate)
 
         except Exception as e:
             print("Failed due to "+ str(e))
@@ -176,12 +185,13 @@ def run_scrape(jsonfile,searchCriteria,linkTemplate,jobLinkTemplate,csvfile):
     for category in secondPass:
         print(category+ " has "+str(len(secondPass[category])) +" jobs in it")
 
-    writeFiles(firstPass,jsonfile,csvfile)
+    writeToFiles(firstPass,jsonfile,csvfile)
 
 if __name__=='__main__':
     print("Preparing for the worst")
     start_time=time.time()
-    joblinkBase="https://a127-jobs.nyc.gov/psc/nycjobs/EMPLOYEE/HRMS/c/HRS_HRAM.HRS_APP_SCHJOB.GBL?Page=HRS_APP_JBPST&Action=U&FOCUS=Applicant&SiteId=1&JobOpeningId={jobId}&PostingSeq=1&"
+
+    dir_path = os.path.dirname(os.path.realpath(__file__))+"/output/"
 
     currTime=str(time.time()).split(".")[0]
 
@@ -189,29 +199,21 @@ if __name__=='__main__':
 
     default_category_file=str(date.today())+"_"+str(currTime)+"By-Category"
 
-    default_job_file=str(date.today()) +"_"+currTime+"Job-Data"
-    #Agency Codes
+    # Agency Codes
     code_linkSrchTemplate="https://a127-jobs.nyc.gov/index_new.html?agency={category}"
 
-    agency_codesTest={"Police Department": "056","Health or Something":"816"}
+    # agency_codesTest={"Police Department": "056","Health or Something":"816"}
+
     badCareer={}
-    jobs=selScrape(agency_codesTest,badCareer,code_linkSrchTemplate,jobLinkTemplate)
+    jobs=selScrape(agency_codes,badCareer,code_linkSrchTemplate,jobLinkTemplate)
 
-    writeToFiles(jobs,default_code_file+".json",default_code_file+".csv")
+    writeToFiles(jobs,dir_path+default_code_file+".json",dir_path+default_code_file+".csv")
     # print(jobs)
-    #Category
-    cat_linkSrchTemplate="https://a127-jobs.nyc.gov/index_new.html?category={category}"
+    # Category
+    # cat_linkSrchTemplate="https://a127-jobs.nyc.gov/index_new.html?category={category}"
 
-    careerInterestTest={"Administration and Human Resources":"CAS"}
-
-
-    # csvfile="CSV_CAT-3.csv"
-    # outfile="TODAY_Cat-3.json"
-    # selScrape(careerInterestTest,cat_linkSrchTemplate,joblinkBase,outfile,csvfile)
-    # outfile="TODAY_Code-3.json"
-    # csvfile="CSV_CODE-3.csv"
-    # selScrape(agency_codesTest,code_linkSrchTemplate,joblinkBase,outfile,csvfile)
-             
+    # careerInterestTest={"Administration and Human Resources":"CAS"}
+       
     final_time=round(time.time()-start_time,2)
     print("------")
     print("Time to execute:{time}".format(time=final_time))
