@@ -1,5 +1,5 @@
 # NYCGovJobSearch
-# *NOTE*: Deprecated due to updates to website. Fix in progress.
+
 A Python based data scrape of https://www1.nyc.gov/jobs/index.page to provide help those seeking a career in civil service.
 
 Website implementation of this data(WIP) can be seen here- https://www.murphy-dev.com
@@ -10,7 +10,7 @@ Website implementation of this data(WIP) can be seen here- https://www.murphy-de
  
  Sample CSV files are in sample_Outputs folder. Sample JSON files are provided in DataScraper.
 
- The main project script(jobCheck.py) outputs JSON and CSV files.By default, it scrapes the job search pages for information on jobs, including links. Optionally, job links can then be scraped(referred to as Job or joblink scrapes) to get more information, as well as full details.
+ The main project script(jobCheck.py) outputs JSON and CSV files.By default, it scrapes the job search pages for information on jobs by agency only, including links. Optionally, job links can then be scraped(referred to as Job or joblink scrapes) to get more information, as well as full details.
  
  In addition, there is also a multithread version of scraping job link data, which is provided as an option for those who can take advantage of multiple threads. Once the job scrape is done, the command will automatically output the command to do this. This represents a large performance increase!
 
