@@ -12,7 +12,8 @@ import datetime
 from datetime import date
 import time
 import json
-import sys, os
+import sys
+import os
 from scrapeargs import gecko_Location,jobLinkTemplate,agency_codes
 # Selenium Setup
 options = webdriver.FirefoxOptions()

@@ -1,15 +1,15 @@
-import argparse
 import time 
 from datetime import date
-import sys
+import sys, os
 import json
 # Selenium gecko location and settings
-gecko_Location='./geckodrivers/geckodriver.exe'
+gecko_Location=os.path.dirname(os.path.realpath(__file__))+"./geckodrivers/geckodriver.exe"
 
 
 
 # Template for Job Links
 jobLinkTemplate="https://a127-jobs.nyc.gov/psc/nycjobs/EMPLOYEE/HRMS/c/HRS_HRAM_FL.HRS_CG_SEARCH_FL.GBL?Page=HRS_APP_JBPST_FL&Action=U&FOCUS=Applicant&SiteId=1&JobOpeningId={jobId}&PostingSeq=1"
+
 # Old Link"https://a127-jobs.nyc.gov/psc/nycjobs/EMPLOYEE/HRMS/c/HRS_HRAM.HRS_APP_SCHJOB.GBL?Page=HRS_APP_JBPST&Action=U&FOCUS=Applicant&SiteId=1&JobOpeningId={jobId}&PostingSeq=1&"
 
 # Category Checks
