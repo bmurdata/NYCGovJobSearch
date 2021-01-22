@@ -114,5 +114,5 @@ try:
     input_code_json=code_jsonfile 
 except:
     input_code_json= args.searchjsonfile
-print("python .\linkScrape_multithread.py --joblinkfile "+ str(input_code_json))
+print("python .\getJobDetails.py --joblinkfile "+ str(input_code_json))
 print("------")

@@ -217,7 +217,7 @@ if __name__== "__main__":
     csvout=baseFile+"CSV.csv"
 
     #jobFile="TEST_2.json"
-    jobFile="TODAY_test4.json"
+    #jobFile="TODAY_test4.json"
     joblinks_raw=pulljoblinks(jobFile)
     print(str(len(joblinks_raw)))
     joblinks=numpy.array_split(numpy.array(joblinks_raw),numprocesses)
