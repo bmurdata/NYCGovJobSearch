@@ -18,7 +18,7 @@ dir_path=str(Path(os.path.dirname(os.path.realpath(__file__))).parents[0])+'/out
 # joblinks must be a array of tuples- form of link, jobnum
 # Compare to find new details, remove old ones, return link,jobID
 
-def compareJsonToCsv_from_db():
+def compareAgencyandMeta_DB():
     details_data=session.query(JobMeta_Model.jobLink,JobMeta_Model.jobNum).all()
     agency_data=session.query(AgencySearch_Model.Link,AgencySearch_Model.jobNum).all()
 
@@ -40,6 +40,7 @@ def compareJsonToCsv_from_db():
             
             # print(agency_id)
             counter=counter+1
+    # Remove expired from the DB
     for detail_id in details_jobNum:
         if detail_id in agency_jobNum:
             continue
@@ -62,8 +63,9 @@ def compareJsonToCsv_from_db():
     print(len(details_data))
     return joblinks
 
-print(len(compareJsonToCsv_from_db()))
-print(compareJsonToCsv_from_db())
+print(len(compareAgencyandMeta_DB()))
+# print(compareAgencyandMeta_DB())
+
 def compareJsonToCsv_from_file(jsonfile):
     print(dir_path)
     test='2021-01-21_1611269606By-AgencyCode.json'
