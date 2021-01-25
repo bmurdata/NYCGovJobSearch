@@ -6,15 +6,15 @@ Website implementation of this data(WIP) can be seen here- https://www.murphy-de
 
 # About
 
- This project provides a list of jobs from the NYC Jobs search site, grouped by category, agency, and more. In addition, it provides a direct link to jobs, something the website does not directly support. 
+ This project provides a list of jobs from the NYC Jobs search site, grouped by category, agency, and more. In addition, it provides a direct shareable link to jobs, something the website does not directly support.  
  
- Sample CSV files are in sample_Outputs folder. Sample JSON files are provided in DataScraper.
-
- The main project script(jobCheck.py) outputs JSON and CSV files.By default, it scrapes the job search pages for information on jobs by agency only, including links. Optionally, job links can then be scraped(referred to as Job or joblink scrapes) to get more information, as well as full details.
+ The main project script(jobCheck.py) outputs JSON and CSV files.By default, it scrapes the job search pages for information on jobs by agency only, including links.  
  
- In addition, there is also a multithread version of scraping job link data, which is provided as an option for those who can take advantage of multiple threads. Once the job scrape is done, the command will automatically output the command to do this. This represents a large performance increase!
+ To get full job details from JSON files, run getJobDetails.py. This can optionally run multiple threads, and check a database to avoid duplicate work. Help files are linked below.  
 
- Agency names were taken from [NYC Open Data Civil List](https://data.cityofnewyork.us/City-Government/Civil-List/ye3c-m4ga), by using the [SODA Api](https://dev.socrata.com/foundry/data.cityofnewyork.us/kpav-sd4t), which uses the SoQL SQL based query language.
+ Sample output files are in the sample_Outputs folder.  
+
+ Agency names were taken from [NYC Open Data Civil List](https://data.cityofnewyork.us/City-Government/Civil-List/ye3c-m4ga), by using the [SODA Api](https://dev.socrata.com/foundry/data.cityofnewyork.us/kpav-sd4t), which uses the SoQL SQL based query language.  
  
  # Current Progress
    - Web scraping of search page, as well as following job links.  
@@ -49,6 +49,25 @@ optional arguments:
                         Job JSON file to use if --nosearch is set. Required  
                         with --nosearch  
 ```
+Run `python getJobDetails.py -h` to get the following:  
+```
+usage: getJobDetails.py [-h] [--joblinkfile JOBLINKFILE] [-pc THREADNUM] [-ofile OUTFILE] [-checkDB]
+
+Multithread implementation of the job link scraper.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --joblinkfile JOBLINKFILE
+                        JSON file to get links from.
+  -pc THREADNUM, --threadnum THREADNUM
+                        How many parallel processes to spawn. Default is cpu count.
+  -ofile OUTFILE, --outfile OUTFILE
+                        Output file names
+  -checkDB, --checkDB   Cscrape based on database contents. Database must be setup for proper function.
+```
+New File: checkDB.py. File will check database based on connection string in SQLAlchemy_Files folder db.py setup.
+
+
 ## Examples
 - To run job search scrape, with automatically generated prefix filenames of YYYY-MM-DD_TIME. 
 - *Note* Will not scrape links by default.  
@@ -92,7 +111,7 @@ For dependency and environment management, this project uses [pipenv](https://pi
    * sqlalchemy- used to connect to database to perform filter searches.  
    * marshmallow- used to serialize and deserialize sqlalchemy objects.  
    * marshmallow-sqlalchemy- used to interface between SQLAlchemy and Marshmallow, mostly unused
-   * PyMysql- Module to connect to MYSQL databases
+   * PyMysql- Module to connect to MYSQL databases.
  ## Other packages used
 
    * json- used to read to JSON file and read to CSV.
