@@ -89,11 +89,14 @@ For dependency and environment management, this project uses [pipenv](https://pi
  ## In the Pipfile
    * selenium- the main web scraper component. Uses Firefox web browser.
    * pyodbc- a module that provides connection to SQL Server. Unused outside of files that call dbtest.py.  
+   * sqlalchemy- used to connect to database to perform filter searches.  
+   * marshmallow- used to serialize and deserialize sqlalchemy objects.  
  ## Other packages used
 
    * json- used to read to JSON file and read to CSV.
    * time- used to track time of program execution.
-   * argparse- to parse command line arguments.
+   * argparse- to parse command line arguments.  
+
 
 # Next Steps
    - Refinements as needed.  
