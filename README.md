@@ -83,7 +83,7 @@ New File: checkDB.py. File will check database based on connection string in SQL
 
 # Installation and Setup
 
- Python 3.7 is required to run this project. You can do so from Python.org [here](https://www.python.org/downloads/). In addtion, make sure to have pip3 installed, and the Selenium Webdriver for Python.
+ Python 3.7 is required to run this project. Download from Python.org [here](https://www.python.org/downloads/). In addtion, make sure to have pip3 installed, and the Selenium Webdriver for Python.
 ## Selenium setup- Firefox
 By default, this project uses FireFox with Selenium Webdriver, and assumes you have a geckodriver. In the `scrapermodule.py`, you can set its location with the `gecko_Location` variable, if it is not on PATH or in the same directory.
 
@@ -91,7 +91,7 @@ If you want to use a different brower, modify the `scraperModule.py` fireFox_set
 
 For more details on Selenium Drivers see [here](https://www.selenium.dev/documentation/en/webdriver/driver_requirements/)
 ## Dependency and environment management
-For dependency and environment management, this project uses [pipenv](https://pipenv-fork.readthedocs.io/en/latest/). A list of packages is in the next section.  
+For dependency and environment management, this project uses [pipenv](https://pipenv-fork.readthedocs.io/en/latest/), or virtualenv. A list of packages is in the next section.  
     To install pipenv:  
     pip install pipenv
 
@@ -103,7 +103,9 @@ For dependency and environment management, this project uses [pipenv](https://pi
 
    From there you can jobCheck.py to generate a JSON file and CSV file. This is the preferred ways to get the data, and other methods provided in this repo will be updated afterwards.
 
-   *NOTE:* A SQL Server Database setup script is provided. However, the jobCheck.py file will make no attempt to connect to it, and it is NOT required to run.
+   *NOTE:* A SQL Server Database setup script is provided. However, the jobCheck.py file will make no attempt to connect to it, and it is NOT required to run.  
+
+  Virtualenv dependencies are provided in requirements.txt in project root.  
 # Python packages used in the project
  ## In the Pipfile or requirements.txt
    * selenium- the main web scraper component. Uses Firefox web browser.
