@@ -1,4 +1,3 @@
-
 import traceback
 import csv
 #Location of Geck Driver
@@ -22,6 +21,7 @@ parser = argparse.ArgumentParser(description="Multithread implementation of the 
 parser.add_argument("--joblinkfile", help="JSON file to get links from.")
 parser.add_argument("-pc","--threadnum", type=int,help="How many parallel processes to spawn. Default is cpu count.",default=cpu_count())
 parser.add_argument("-ofile","--outfile",help="Output file names",default=defaultfname)
+parser.add_argument("-checkDB","--checkDB",action="store_true",help="Cscrape based on database contents. Database must be setup for proper function.")
 args = parser.parse_args()
 # print(sys.argv[1:])
 class myLabels:
@@ -151,10 +151,10 @@ def scrape_multi_arr(jobllinks):
                 jobLabels=browser.find_elements_by_css_selector("div.ps_box-group.hrs_cg_groupbox_field_label_back .ps_header-group")
                 jobContent=browser.find_elements_by_css_selector("div.ps_box-group.hrs_cg_groupbox_field_label_back .ps_content-group")
                 # print(jobContent[0].get_attribute('innerText'))
-                print("There are some number of labels. That number is "+str(len(jobLabels)))
-                print("There are some number of Content. That number is "+str(len(jobContent)))
+                # print("There are some number of labels. That number is "+str(len(jobLabels)))
+                # print("There are some number of Content. That number is "+str(len(jobContent)))
                 jobDescrip={jobLabels[i].get_attribute('innerText'):jobContent[i].get_attribute('innerText') for i in range(len(jobLabels))}
-                print("Sems to work! Dictionary of length: "+str(len(jobDescrip)))
+                # print("Sems to work! Dictionary of length: "+str(len(jobDescrip)))
             except Exception as e:
                 print(e)
                 print("Nothing to add")
@@ -218,7 +218,16 @@ if __name__== "__main__":
 
     #jobFile="TEST_2.json"
     #jobFile="TODAY_test4.json"
-    joblinks_raw=pulljoblinks(jobFile)
+    # NOTE: Database must be established and conform to SQLAlchemy setup for this to work.
+    if args.checkDB==True:
+        from checkDB import compareAgencyandMeta_DB as cdb
+        try:
+            joblinks_raw=cdb()
+        except Exception:
+            print( "Failed due to incorrect Database setup. ")
+            exit(0)
+    else:
+        joblinks_raw=pulljoblinks(jobFile)
     print(str(len(joblinks_raw)))
     joblinks=numpy.array_split(numpy.array(joblinks_raw),numprocesses)
 
