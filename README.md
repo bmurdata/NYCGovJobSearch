@@ -86,11 +86,13 @@ For dependency and environment management, this project uses [pipenv](https://pi
 
    *NOTE:* A SQL Server Database setup script is provided. However, the jobCheck.py file will make no attempt to connect to it, and it is NOT required to run.
 # Python packages used in the project
- ## In the Pipfile
+ ## In the Pipfile or requirements.txt
    * selenium- the main web scraper component. Uses Firefox web browser.
    * pyodbc- a module that provides connection to SQL Server. Unused outside of files that call dbtest.py.  
    * sqlalchemy- used to connect to database to perform filter searches.  
    * marshmallow- used to serialize and deserialize sqlalchemy objects.  
+   * marshmallow-sqlalchemy- used to interface between SQLAlchemy and Marshmallow, mostly unused
+   * PyMysql- Module to connect to MYSQL databases
  ## Other packages used
 
    * json- used to read to JSON file and read to CSV.
@@ -100,7 +102,6 @@ For dependency and environment management, this project uses [pipenv](https://pi
 
 # Next Steps
    - Refinements as needed.  
-   - Refine the Job link details JSON  
    - Update support for SQL Server.  
    - Create SQL output file. (low priority)
 
