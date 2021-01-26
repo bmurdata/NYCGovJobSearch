@@ -18,7 +18,6 @@ from scrapeargs import gecko_Location,jobLinkTemplate,agency_codes
 # Selenium Setup
 options = webdriver.FirefoxOptions()
 options.add_argument('-headless')
-print("Importin something")
 
 # Setup of browser
 def fireFox_setup():
@@ -70,7 +69,7 @@ def selScrape(criteria_Dict,badCareer,jobSource,directJobLink):
                 try:
                     reloader= browser.find_element_by_css_selector(".ps_box-more")
                     browser.execute_script("submitAction_win0(document.win0,'HRS_AGNT_RSLT_I$hdown$0')")
-                    time.sleep(2)
+                    time.sleep(1)
                     x=x+1
                     
                 except Exception as e:
