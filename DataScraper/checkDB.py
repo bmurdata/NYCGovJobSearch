@@ -20,9 +20,9 @@ def compareAgencyandMeta_DB():
     details_data=session.query(JobMeta_Model.jobLink,JobMeta_Model.jobNum).all()
     agency_data=session.query(AgencySearch_Model.Link,AgencySearch_Model.jobNum).all()
     fullDescription=[i[0] for i in session.query(JobDescrip_Model.jobNum).all()]
-    print(len(details_data))
-    print(len(agency_data))
-    print(len(fullDescription))
+    # print(len(details_data))
+    # print(len(agency_data))
+    # print(len(fullDescription))
 
     joblinks=[]
     counter=0
@@ -40,12 +40,12 @@ def compareAgencyandMeta_DB():
             
             # print(agency_id)
             counter=counter+1
-    # Remove expired from the DB
+    # Remove expired from the Job Details
     today=datetime.today().strftime( '%Y-%m-%d')
     before_todayt=session.query(JobMeta_Model).filter(or_(JobMeta_Model.post_until < today,JobMeta_Model.job_ID==0)).all()
-    for row in before_todayt:
-        print(row.post_until)
-        print(row.job_ID)
+    # for row in before_todayt:
+    #     print(row.post_until)
+    #     print(row.job_ID)
 
     print("There are "+str(len(before_todayt)))
     oldJobs=[i[0] for i in session.query(JobMeta_Model.jobNum).filter(or_(JobMeta_Model.post_until < today,JobMeta_Model.job_ID==0)).all()]
@@ -61,11 +61,10 @@ def compareAgencyandMeta_DB():
             continue
         else:
             evilcount=evilcount+1
-            x=[i for i in details_data if i[1]==detail_id]
             session.query(JobMeta_Model).filter(JobMeta_Model.job_ID==detail_id).delete(synchronize_session="fetch")
             session.query(JobDescrip_Model).filter(JobDescrip_Model.jobNum==detail_id).delete(synchronize_session="fetch")
             session.commit()
-            details_data.remove(x[0])
+
     # Remove non matches from the Job Description
     descrip_count=0
     for descrip_id in fullDescription:
@@ -76,30 +75,11 @@ def compareAgencyandMeta_DB():
             session.query(JobDescrip_Model).filter(JobDescrip_Model.jobNum==descrip_id).delete(synchronize_session="fetch")
             session.commit()
     joblinks=agency_data
-    print(counter)
-    print(evilcount)
+    # print(counter)
+    # print(evilcount)
     print("There were this many job descriptions removed "+str(descrip_count))
-    print(len(details_data))
+
     return joblinks
 
-print(len(compareAgencyandMeta_DB()))
+# print(len(compareAgencyandMeta_DB()))
 # print(compareAgencyandMeta_DB())
-
-def compareJsonToCsv_from_file(jsonfile):
-    print(dir_path)
-    test='2021-01-21_1611269606By-AgencyCode.json'
-
-    with open(dir_path+test) as ifile:
-        try:
-            jobNumbers=[]
-            jsondata=json.load(ifile)
-            print("jsondata has a length of "+str(len(jsondata)))
-            for category in jsondata:
-                for job in jsondata[category]:
-                    jobNumbers.append(job["jobNum"])
-            failure=False
-
-        except Exception as e:
-            print("Failed to load the data reason: \n"+str(e))
-            failure=True
-    return "This doesn't work. Intention is to compare old Details JSON or CSV files to newer Agency ones, however database takes priority."
