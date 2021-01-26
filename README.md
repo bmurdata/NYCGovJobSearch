@@ -25,29 +25,17 @@ Website implementation of this data(WIP) can be seen here- https://www.murphy-de
 ## Help file
 Run `python jobcheck.py -h` to get the following:  
 ```
-usage: jobCheck.py [-h] [-afile AGENCYFILE] [-cfile CATEGORYFILE]  
-                   [-jobout JOBOUTPUT] [-scrapelinks] [--nosearch]  
-                   [-searchjson SEARCHJSONFILE]  
+usage: jobCheck.py [-h] [-afile AGENCYFILE] [-cfile CATEGORYFILE]
 
 NYCGov Job site scraper. Outputs JSON and CSV files by job category and by
-specific agency.  
+specific agency.
 
-optional arguments:  
-  -h, --help            show this help message and exit  
-  -afile AGENCYFILE, --agencyfile AGENCYFILE  
-                        Agency JSON and CSV file names.  
-  -cfile CATEGORYFILE, --categoryfile CATEGORYFILE  
-                        Category JSON and CSV file names.  
-  -jobout JOBOUTPUT, --joboutput JOBOUTPUT  
-                        Job Link JSON and CSV output files.  
-  -withlinks, --scrapejoblinks  
-                        If set, runs scrape for all job links, after getting  
-                        them from search. Defaults to false  
-  --nosearch            If set, skips scrape for search pages, by category and  
-                        code. Defaults to false  
-  -searchjson SEARCHJSONFILE, --searchjsonfile SEARCHJSONFILE  
-                        Job JSON file to use if --nosearch is set. Required  
-                        with --nosearch  
+optional arguments:
+  -h, --help            show this help message and exit
+  -afile AGENCYFILE, --agencyfile AGENCYFILE
+                        Agency JSON and CSV file names.
+  -cfile CATEGORYFILE, --categoryfile CATEGORYFILE
+                        Category JSON and CSV file names.
 ```
 Run `python getJobDetails.py -h` to get the following:  
 ```
@@ -63,7 +51,7 @@ optional arguments:
                         How many parallel processes to spawn. Default is cpu count.
   -ofile OUTFILE, --outfile OUTFILE
                         Output file names
-  -checkDB, --checkDB   Cscrape based on database contents. Database must be setup for proper function.
+  -checkDB, --checkDB   Scrape based on database contents, and delete old entries. Database must be setup for proper function.
 ```
 New File: checkDB.py. File will check database based on connection string in SQLAlchemy_Files folder db.py setup.
 

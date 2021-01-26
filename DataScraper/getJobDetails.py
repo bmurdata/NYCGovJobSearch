@@ -21,7 +21,7 @@ parser = argparse.ArgumentParser(description="Multithread implementation of the 
 parser.add_argument("--joblinkfile", help="JSON file to get links from.")
 parser.add_argument("-pc","--threadnum", type=int,help="How many parallel processes to spawn. Default is cpu count.",default=cpu_count())
 parser.add_argument("-ofile","--outfile",help="Output file names",default=defaultfname)
-parser.add_argument("-checkDB","--checkDB",action="store_true",help="Cscrape based on database contents. Database must be setup for proper function.")
+parser.add_argument("-checkDB","--checkDB",action="store_true",help="Scrape based on current database contents, and delete old entries. Database must be setup for proper function.")
 args = parser.parse_args()
 # print(sys.argv[1:])
 class myLabels:
