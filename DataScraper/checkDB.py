@@ -4,19 +4,20 @@ from sqlalchemy.orm import sessionmaker
 from SQLAlchemy_Files.models.JobMeta import JobMeta_Model, AgencySearch_Model,JobDescrip_Model
 from datetime import datetime,timedelta
 from sqlalchemy import or_
-Session = sessionmaker(bind=engine)
-session=Session()
 
 import json
 import os
 from pathlib import Path
 dir_path=str(Path(os.path.dirname(os.path.realpath(__file__))).parents[0])+'/output/'
-
+Session = sessionmaker(bind=engine)
+session=Session()
 # joblinks must be a array of tuples- form of link, jobnum
 # Compare to find new details, remove old ones, return link,jobID
 
 # Compares database tables, assumes that Agency CSV and JSON files already in Agency table.
 def compareAgencyandMeta_DB():
+    
+
     details_data=session.query(JobMeta_Model.jobLink,JobMeta_Model.jobNum).all()
     agency_data=session.query(AgencySearch_Model.Link,AgencySearch_Model.jobNum).all()
     fullDescription=[i[0] for i in session.query(JobDescrip_Model.jobNum).all()]
@@ -78,8 +79,54 @@ def compareAgencyandMeta_DB():
     # print(counter)
     # print(evilcount)
     print("There were this many job descriptions removed "+str(descrip_count))
+    session.close()
 
     return joblinks
 
 # print(len(compareAgencyandMeta_DB()))
 # print(compareAgencyandMeta_DB())
+
+def writeMeta(data:dict()):
+    # for category in data:
+    #     print(category) [category]
+    for job_dict in data:
+        session.add(JobMeta_Model(
+            jobNum=job_dict["jobNum"],
+            hiring_agency=job_dict["HiringAgency"],
+            jobLink=job_dict["jobLink"],
+            job_ID=job_dict["Job ID"],
+            business_title=job_dict["Business Title"],
+            civil_title=job_dict["Civil Service Title"],
+            title_class=job_dict["Title Classification"],
+            job_category=job_dict["Job Category"],
+            career_level=job_dict["Career Level"],
+            work_location=job_dict["Work Location"],
+            division_work_unit=job_dict["Division/Work Unit"],
+            total_openings=job_dict["# of Positions"],
+            title_code=job_dict["Title Code No"],
+            level=job_dict["Level"],
+            proposed_salary_range=job_dict["Proposed Salary Range"],
+            posted=job_dict["POSTING DATE"],
+            post_until=job_dict["POST UNTIL"],
+        ))
+    session.commit()
+    
+
+
+def writeDetails(data:dict()):
+
+
+    for job_dict in data:
+        session.add(JobDescrip_Model(
+            add_info=job_dict["Additional Information"],
+            hours_shift=job_dict["Hours/Shift"],
+            job_descrip=job_dict["Job Description"],
+            min_qual=job_dict["Minimum Qual Requirements"],
+            preferred_skills=job_dict["Preferred Skills"],
+            recruit_contact=job_dict["Recruitment Contact"],
+            residency_req=job_dict["Residency Requirement"],
+            to_apply=job_dict["To Apply"],
+            work_location=job_dict["Work Location"],
+            jobNum=job_dict["jobNum"],
+        ))
+    session.commit()
