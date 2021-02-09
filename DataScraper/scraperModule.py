@@ -134,7 +134,7 @@ def writeToFiles(jsondata,jsonFile,csvFile):
                         
 
 # Main entry point. Runs the scrape
-def run_scrape(jsonfile,searchCriteria,linkTemplate,jobLinkTemplate,csvfile):
+def run_scrape(jsonfile,searchCriteria,linkTemplate,jobLinkTemplate,csvfile,writeDB,noOutput):
     badSearch={}
     try:
 
@@ -184,8 +184,11 @@ def run_scrape(jsonfile,searchCriteria,linkTemplate,jobLinkTemplate,csvfile):
     print("There are "+str(len(secondPass))+ " total categories in secondpass")
     for category in secondPass:
         print(category+ " has "+str(len(secondPass[category])) +" jobs in it")
-
-    writeToFiles(firstPass,jsonfile,csvfile)
+    if writeDB==True:
+        from checkDB import writeAgencyData
+        writeAgencyData(firstPass)
+    if noOutput !=True:
+        writeToFiles(firstPass,jsonfile,csvfile)
 
 if __name__=='__main__':
     print("Preparing for the worst")

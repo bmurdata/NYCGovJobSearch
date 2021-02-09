@@ -22,6 +22,9 @@ parser.add_argument("--joblinkfile", help="JSON file to get links from.")
 parser.add_argument("-pc","--threadnum", type=int,help="How many parallel processes to spawn. Default is cpu count.",default=cpu_count())
 parser.add_argument("-ofile","--outfile",help="Output file names",default=defaultfname)
 parser.add_argument("-checkDB","--checkDB",action="store_true",help="Scrape based on current database contents, and delete old entries. Database must be setup for proper function.")
+parser.add_argument("-writeDB","--writeDB",action="store_true",help="Update database from JSON data directly. Unless --noOutput is set, files will be created. Database must be setup for proper function.")
+parser.add_argument("-noOutput","--noOutput",action="store_true",help="Stops creation of file output. Recommended only use when writeDB is set.")
+
 args = parser.parse_args()
 # print(sys.argv[1:])
 class myLabels:
@@ -87,7 +90,6 @@ def write_json(jobJson,job_detail,job_json,job_details_json):
         traceback.print_exc()
 
 # Write Job JSON file to CSV
-
 def writeJobtoCsv(jsonfile,jobcsv):
     try:
         with open(jsonfile) as ifile:
@@ -243,6 +245,13 @@ if __name__== "__main__":
         jobs=jobs+results[0]
         details=details+results[1]
         alltimes.append(results[2])
+    if args.writeDB==True:
+        from checkDB import writeMeta,writeDetails
+        try:
+            writeMeta(jobs)
+            writeDetails(details)
+        except Exception:
+            print("Failed to write to DB. Check checkDB for setup")
     try:
         write_json(jobs,details,jsonout,job_details_json)
     except Exception as e:
@@ -250,8 +259,10 @@ if __name__== "__main__":
         traceback.print_exc()
     
     start__runtime=time.time()
-    writeJobtoCsv(jsonout,csvout)
-    writeJobtoCsv(job_details_json,job_details_csv)
+    if  args.noOutput != True:
+        writeJobtoCsv(jsonout,csvout)
+        writeJobtoCsv(job_details_json,job_details_csv)
+    
     my_runtime=round(time.time()-start__runtime,2)
     print("Time to execute writing to file was "+str(my_runtime))
     print("------")

@@ -31,6 +31,9 @@ parser.add_argument("-afile","--agencyfile",help="Agency JSON and CSV file names
 
 parser.add_argument("-cfile","--categoryfile", help="Category JSON and CSV file names.",
                     default=default_category_file)
+parser.add_argument("-writeDB","--writeDB",action="store_true",help="Update database from JSON data directly. Unless --noOutput is set, files will be created. Database must be setup for proper function.")
+parser.add_argument("-noOutput","--noOutput",action="store_true",help="Stops creation of file output. Recommended only use when writeDB is set.")
+parser.add_argument("-test","--test",action="store_true",help="Test script with two agencies to make sure all works.")
 
 print(sys.argv[1:])
 args = parser.parse_args()
@@ -52,8 +55,10 @@ print("Performing search scrape.")
 code_jsonfile=dir_path+(args.agencyfile.split(".",1)[0]) + ".json"
 code_csvfile=dir_path+(args.agencyfile.split(".",1)[0]) +".csv"
 
-# agency_codes={"ADMINISTRATION FOR CHILDRE": "067", "CUNY BRONX COMMUNITY COLLE": "463"}
-run_scrape(code_jsonfile,agency_codes,linkSrchTemplate_Code,jobLinkTemplate,code_csvfile)
+if args.test==True:
+    print("Running using test parameters")
+    agency_codes={"ADMINISTRATION FOR CHILDRE": "067", "CUNY BRONX COMMUNITY COLLE": "463"}
+run_scrape(code_jsonfile,agency_codes,linkSrchTemplate_Code,jobLinkTemplate,code_csvfile,args.writeDB,args.noOutput)
 
 agency_scrape_time=round(time.time()-start_time,2)
 print("------")
