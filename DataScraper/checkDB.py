@@ -90,7 +90,8 @@ def writeMeta(data:list(dict())):
     # for category in data:
     #     print(category) [category]
     for job_dict in data:
-        session.add(JobMeta_Model(
+        try:
+            session.add(JobMeta_Model(
             jobNum=job_dict["jobNum"],
             hiring_agency=job_dict["HiringAgency"],
             jobLink=job_dict["jobLink"],
@@ -109,6 +110,8 @@ def writeMeta(data:list(dict())):
             posted=job_dict["POSTING DATE"],
             post_until=job_dict["POST UNTIL"],
         ))
+        except Exception as e:
+            continue
     session.commit()
     
 
@@ -117,7 +120,8 @@ def writeDetails(data:list(dict())):
 
 
     for job_dict in data:
-        session.add(JobDescrip_Model(
+        try:
+            session.add(JobDescrip_Model(
             add_info=job_dict["Additional Information"],
             hours_shift=job_dict["Hours/Shift"],
             job_descrip=job_dict["Job Description"],
@@ -129,9 +133,15 @@ def writeDetails(data:list(dict())):
             work_location=job_dict["Work Location"],
             jobNum=job_dict["jobNum"],
         ))
+        except Exception as e:
+            continue
     session.commit()
 
-def writeAgencyData(data:dict()):
+def writeAgencyData(data:dict(),removePrev:bool):
+    if removePrev==True:
+        print("Deleting the table")
+        session.query(AgencySearch_Model).delete()
+        session.commit()
     for category in data:
         for job_dict in data[category]:
             session.add(AgencySearch_Model(
@@ -294,6 +304,6 @@ def testAndClear():
         "Work Location": "Not listed",
         "jobNum": "437242"
     }]
-    writeAgencyData(agency_Data)
+    writeAgencyData(agency_Data,True)
     writeMeta(meta_Data)
     writeDetails(details_Data)

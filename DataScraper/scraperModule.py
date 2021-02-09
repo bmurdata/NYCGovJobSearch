@@ -186,7 +186,7 @@ def run_scrape(jsonfile,searchCriteria,linkTemplate,jobLinkTemplate,csvfile,writ
         print(category+ " has "+str(len(secondPass[category])) +" jobs in it")
     if writeDB==True:
         from checkDB import writeAgencyData
-        writeAgencyData(firstPass)
+        writeAgencyData(firstPass,True)
     if noOutput !=True:
         writeToFiles(firstPass,jsonfile,csvfile)
 
