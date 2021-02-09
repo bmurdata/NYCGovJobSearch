@@ -111,6 +111,7 @@ def writeMeta(data:list(dict())):
             post_until=job_dict["POST UNTIL"],
         ))
         except Exception as e:
+            print("Failed to insert")
             continue
     session.commit()
     
@@ -140,11 +141,14 @@ def writeDetails(data:list(dict())):
 def writeAgencyData(data:dict(),removePrev:bool):
     if removePrev==True:
         print("Deleting the table")
+        
         session.query(AgencySearch_Model).delete()
         session.commit()
+        print(str(len(session.query(AgencySearch_Model).all())))
     for category in data:
         for job_dict in data[category]:
-            session.add(AgencySearch_Model(
+            try:
+                session.add(AgencySearch_Model(
                 jobNum=job_dict["jobNum"],
                 Title=job_dict["title"],
                 Link=job_dict["link"],
@@ -155,10 +159,14 @@ def writeAgencyData(data:dict(),removePrev:bool):
                 Agency=job_dict["Agency"],
                 Posted_Date=job_dict["Posted_Date"],
             ))
+            except Exception as e:
+                continue
     session.commit()
 
 def testAndClear():
     # Cause I'm tired of writing on command line all the time
+    print(str(len(session.query(AgencySearch_Model).all())))
+    session.commit()
     agency_Data={
     "003": [],
     "011": [],
