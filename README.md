@@ -1,6 +1,6 @@
 # NYCGovJobSearch
 
-A Python based data scrape of https://www1.nyc.gov/jobs/index.page to provide help those seeking a career in civil service.
+A Python based data scrape of https://www1.nyc.gov/jobs/index.page to provide help those seeking a career in civil service. Now with Mongo!
 
 Website implementation of this data(WIP) can be seen here- https://www.murphy-dev.com
 
