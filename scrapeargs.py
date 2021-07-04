@@ -3,7 +3,7 @@ from datetime import date
 import sys, os
 import json
 # Selenium gecko location and settings
-gecko_Location=os.path.dirname(os.path.realpath(__file__))+"/geckodrivers/geckodriver.exe"
+gecko_Location=os.path.dirname(os.path.realpath(__file__))+"/webdriver/chromedriver"
 
 
 
