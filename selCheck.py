@@ -18,11 +18,6 @@ from scrapeargs import gecko_Location,jobLinkTemplate,agency_codes
 # Selenium Setup
 options = webdriver.ChromeOptions()
 options.add_argument('-headless')
-
-
-
-
-
 # Setup of browser
 def Chrome_setup():
     try:
@@ -41,8 +36,4 @@ def Chrome_setup():
             exit()
     print("Browser setup and ready for use")
     return browser
-brow=Chrome_setup()
-brow.get('https://github.com/bmurdata')
-txt=brow.find_element_by_tag_name('body')
-print(txt.text)
-brow.close()
+
