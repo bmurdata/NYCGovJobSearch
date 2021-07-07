@@ -13,7 +13,7 @@ import os
 from datetime import date
 from multiprocessing import Pool
 import traceback
-start_time=time.time()
+start_time=time.time()  
 agency_scrape_time="NA"
 category_scrape_time="NA"
 dir_path = os.path.dirname(os.path.realpath(__file__))+"/output/"
@@ -48,8 +48,15 @@ if __name__== "__main__":
     code_csvfile=dir_path+(args.agencyfile.split(".",1)[0]) +".csv"
     # run_scrape(code_jsonfile,agency_codes,linkSrchTemplate_Code,jobLinkTemplate,code_csvfile,args.writeDB,args.noOutput)
     badC=dict()
-    monCheck.clearfromMongo('test-jobsByCode')
+    if args.test==True:
+        print("Running using test parameters")
+        agency_codes={"ADMINISTRATION FOR CHILDRE": "067", "CUNY BRONX COMMUNITY COLLE": "463"}
+    monCheck.clearfromMongo('jobsByCode')
     mongoScraperModule.jobScrape(agency_codes,badC,linkSrchTemplate_Code,jobLinkTemplate)
+    if args.writeDB:
+
+        jobLinks=monCheck.mongoCompareAgencyandMeta_DB()
+        mongoScraperModule.scrape_multi_arr(jobLinks)
 
 
 # Scrape by Agency Code

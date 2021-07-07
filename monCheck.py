@@ -65,11 +65,11 @@ def writeToMongo(jobJson:dict(),collecName:str()):
     collec.insert_one(jobJson)
     # print(collec.count_documents({}))
 
-def mongoCompareAgencyandMeta_DB():
+def mongoCompareAgencyandMeta_DB()->list():
     
     print('Testing connection to Mongo DB')
     searchCollection="jobInfo_Meta"
-    # Connect 
+    # Connect to MongoDB
     try:
         url = dbsetup.monConnection
         client = pymongo.MongoClient(url)
@@ -89,37 +89,52 @@ def mongoCompareAgencyandMeta_DB():
         print(e)
         return result
     
-    fullDescription_jobNum=[i['jobNum'] for i in content_data]
 
     joblinks=[]
     details_jobNum=[i['jobNum'] for i in details_data]
     agency_jobNum=[i['jobNum'] for i in agency_data]
+    content_jobNum=[i['jobNum'] for i in content_data]
 
     today=datetime.today().strftime( '%Y-%m-%d')
     expired=list()
-    for ind,item in enumerate(details_data):
-        if today>item['POST UNTIL']:
-            print("Found an expired: "+item['POST UNTIL'])
-            details_data.pop(ind)
-            detailcollection.delete_many(item['jobNum'])
-            expired.append(item['jobNum'])
+
+    # Get all the expired items
+    try:
+
+        for ind,item in enumerate(details_data):
+            if today>item['POST UNTIL']:
+                print("Found an expired: "+item['POST UNTIL'])
+                details_data.pop(ind)
+                detailcollection.delete_many({'jobNum':item['jobNum']})
+                contentcollection.delete_many({'jobNum':item['jobNum']})
+                expired.append(item['jobNum'])
+            # If the job does not exist in agency data, remove from others
+            elif item['jobNum'] not in agency_jobNum:
+                detailcollection.delete_many({'jobNum':item['jobNum']})
+                contentcollection.delete_many({'jobNum':item['jobNum']})
+    except Exception as e:
+        print("Error below")
+        print(e)
+    joblinks=list()
+    for job in agency_data:
+        jobNum=job['jobNum']
+        if jobNum not in details_jobNum:
+            joblinks.append([job['link'],job['jobNum']])
+
+
+
+
+
+
 
 
     print(len(agency_jobNum))
     # Check for new ones. 
-    for agency_id in agency_jobNum:
-        
-        if agency_id in details_jobNum:
-            agency_data=[job for job in agency_data if job[1]!=agency_id]
-        else:
-            
-            # print(agency_id)
-            counter=counter+1
 
     # Remove non matches from details
 
     # Remove non matches from the Job Description
-    descrip_count=0
+    # descrip_count=0
     # for descrip_id in fullDescription:
     #     if descrip_id in agency_jobNum:
     #         continue
@@ -127,6 +142,6 @@ def mongoCompareAgencyandMeta_DB():
     #         descrip_count=descrip_count+1
     #         session.query(JobDescrip_Model).filter(JobDescrip_Model.jobNum==descrip_id).delete(synchronize_session="fetch")
     #         session.commit()
-    joblinks=agency_data
+    #joblinks=[[item['link'],item['jobNum']] for item in agency_data]
 
     return joblinks
