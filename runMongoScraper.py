@@ -7,6 +7,7 @@ import sys
 
 from selCheck import Chrome_setup
 import mongoScraperModule, monCheck
+from monCheck import writeToMongo, writeToMongoMany
 # from scrapeargs import args
 from scrapeargs import linkSrchTemplate_Category, linkSrchTemplate_Code, agency_codes, careerInterest,jobLinkTemplate
 import os 
@@ -43,7 +44,7 @@ args = parser.parse_args()
 
 print("Performing search scrape.")
 if __name__== "__main__":
-    print("Attempting to run a version with Mongo! Hoping for the best!")
+    print("Attempting to run a version with Mongo! Hoping for the best!"+str(currTime))
     code_jsonfile=dir_path+(args.agencyfile.split(".",1)[0]) + ".json"
     code_csvfile=dir_path+(args.agencyfile.split(".",1)[0]) +".csv"
     # run_scrape(code_jsonfile,agency_codes,linkSrchTemplate_Code,jobLinkTemplate,code_csvfile,args.writeDB,args.noOutput)
@@ -51,10 +52,21 @@ if __name__== "__main__":
     if args.test==True:
         print("Running using test parameters")
         agency_codes={"ADMINISTRATION FOR CHILDRE": "067", "CUNY BRONX COMMUNITY COLLE": "463"}
-    monCheck.clearfromMongo('jobsByCode')
-    mongoScraperModule.jobScrape(agency_codes,badC,linkSrchTemplate_Code,jobLinkTemplate)
+    
+    writeToMongo({"log":"Writing today 7-10-21"+str(currTime)},"writeLogs")
+    try:
+        monCheck.clearfromMongo('jobsByCode')
+        myJobs=mongoScraperModule.jobScrape(agency_codes,badC,linkSrchTemplate_Code,jobLinkTemplate)
+        writeToMongo({"log":"Writing this many jobs on 7-10-21: "+str(len(myJobs))+" at "+str(currTime)},"writeLogs")
+        writeToMongoMany(myJobs,'jobsByCode')
+        # for job in myJobs:
+        #     writeToMongo(job,"jobsByCode")
+    except Exception as e:
+        writeToMongo({"log":"Writing today 7-10-21,"+str(currTime)+" something crashed"},"writeLogs")
+        print("System failure dont know why. see below")
+        print(e)
     if args.writeDB:
-
+        print("Writing to DB")
         jobLinks=monCheck.mongoCompareAgencyandMeta_DB()
         mongoScraperModule.scrape_multi_arr(jobLinks)
 

@@ -1,3 +1,4 @@
+from os import write
 import pymongo
 import json
 from bson.json_util import dumps
@@ -51,6 +52,7 @@ def getjob():
 #         myDict.pop(ind)
 # print(len(myDict))
 def clearfromMongo(collecName:str()):
+    writeToMongo({"log":"Clearing collection "+collecName},"writeLogs")
     url = dbsetup.monConnection
     client = pymongo.MongoClient(url)
     database = client[dbsetup.db]
@@ -62,9 +64,23 @@ def writeToMongo(jobJson:dict(),collecName:str()):
     client = pymongo.MongoClient(url)
     database = client[dbsetup.db]
     collec = database[collecName]
-    collec.insert_one(jobJson)
-    # print(collec.count_documents({}))
+    try:
+        collec.insert_one(jobJson)
+    except Exception as e:
 
+        writeToMongo({"Log":"Failed due to: "+str(e)},"writeLogs")
+    # print(collec.count_documents({}))
+def writeToMongoMany(manyjobJson:dict(),collecName:str()):
+    url = dbsetup.monConnection
+    client = pymongo.MongoClient(url)
+    database = client[dbsetup.db]
+    collec = database[collecName]
+    try:
+        collec.insert_many(manyjobJson)
+    except Exception as e:
+
+        writeToMongo({"Log":"Failed due to: "+str(e)},"writeLogs")
+    # print(collec.count_documents({}))
 def mongoCompareAgencyandMeta_DB()->list():
     
     print('Testing connection to Mongo DB')

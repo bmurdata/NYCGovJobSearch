@@ -87,14 +87,15 @@ def jobScrape(criteria_Dict,badCareer,jobSource,directJobLink):
                     'link':directJobLink.format(jobId=jobElements[3].get_attribute('innerText')),
                     'shortcategory':cat,
                     'longcategory':longcat,
-                    'jobAttributes':job.get_attribute('innerText'),#Break it up
+                    #'jobAttributes':job.get_attribute('innerText'),#Break it up
                     'Department':jobElements[7].get_attribute('innerText'), # Department
                     'Agency':jobElements[9].get_attribute('innerText'), # Location
                     'Location':jobElements[5].get_attribute('innerText'), # Agency
                     'Posted_Date':datetime.strptime(jobElements[11].get_attribute('innerText'), "%m/%d/%Y").strftime("%Y-%m-%d") if jobElements[11].get_attribute('innerText') else "Not Listed", # Posted Date
                 }
-                monCheck.writeToMongo(jobData,'jobsByCode')
-                # allJobs_Dict.append(jobData)
+                # monCheck.writeToMongo(jobData,'jobsByCode')
+                print("Trying to append a "+str(type(jobData))+" to the array")
+                allJobs_Dict.append(jobData)
 
 
             except Exception as e:
@@ -104,7 +105,7 @@ def jobScrape(criteria_Dict,badCareer,jobSource,directJobLink):
     print("All done")
     # print(allJobs_Dict)
     browser.quit()
-    # return allJobs_Dict
+    return allJobs_Dict
 
 # Scrape the joblinks. Designed to work with multithreading
 def scrape_multi_arr(jobllinks:list()):
@@ -157,7 +158,7 @@ def scrape_multi_arr(jobllinks:list()):
             jobDescription = {label: jobDescrip.get(label,"Not listed") for label in myLabels.details_order}
             #jobDescription['jobNum']=link[1]
             job_detail.append(jobDescription)
-            monCheck.writeToMongo(jobDescription,'jobInfo_Content')
+            # monCheck.writeToMongo(jobDescription,'jobInfo_Content')
             current_job={'HiringAgency':agency_title,'jobLink':link[0],'jobNum':link[1]}
             # Write to the cmd line. Comment out in production
             if len(jobMeta)>0:
@@ -184,7 +185,7 @@ def scrape_multi_arr(jobllinks:list()):
                         current_job[i] =jobMeta[i] if jobMeta[i] and jobMeta[i] is not "\u00a0" else "Not Listed"
                         
             jobJson.append(current_job)
-            monCheck.writeToMongo(current_job,'jobInfo_Meta')
+            # monCheck.writeToMongo(current_job,'jobInfo_Meta')
     except Exception as e:
         print("Not really sure why things fell apart. Keep trying ")
         print(e)
@@ -192,7 +193,9 @@ def scrape_multi_arr(jobllinks:list()):
 
         browser.quit()
     browser.quit()
+    monCheck.writeToMongoMany(job_detail,'jobInfo_Content')
+    monCheck.writeToMongoMany(jobJson,'jobInfo_Meta')
     my_runtime=round(time.time()-start__runtime,2)
-
+    print("Inventory: "+str(len(jobJson))+" Meta items, "+str(len(job_detail))+" content items and ran "+str(len(jobllinks))+" jobs")
     return jobJson,job_detail,my_runtime
 
