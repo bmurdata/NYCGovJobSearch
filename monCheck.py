@@ -121,7 +121,7 @@ def mongoCompareAgencyandMeta_DB()->list():
                 "datetime":str(datetime.now())}
 
         writeToMongo(myLog,"writeLogs")
-        return result
+        return 0
     
 
     joblinks=[]
