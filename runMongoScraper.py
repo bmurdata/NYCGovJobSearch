@@ -11,7 +11,7 @@ from monCheck import writeToMongo, writeToMongoMany
 # from scrapeargs import args
 from scrapeargs import linkSrchTemplate_Category, linkSrchTemplate_Code, agency_codes, careerInterest,jobLinkTemplate
 import os 
-from datetime import date
+from datetime import date, datetime
 from multiprocessing import Pool
 import traceback
 start_time=time.time()  
@@ -52,8 +52,15 @@ if __name__== "__main__":
     if args.test==True:
         print("Running using test parameters")
         agency_codes={"ADMINISTRATION FOR CHILDRE": "067", "CUNY BRONX COMMUNITY COLLE": "463"}
-    
-    writeToMongo({"log":"Writing today 7-10-21"+str(currTime)},"writeLogs")
+    myLog={
+                "step":"Initial",
+                "log":"Starting to write",
+                "date":str(datetime.now().strftime("%m/%d/%Y")),
+                "time":str(datetime.now().strftime("%H:%M:%S")),
+                "datetime":str(datetime.now())}
+
+    writeToMongo(myLog,"writeLogs")
+    # writeToMongo({"log":"Writing today 7-10-21"+str(currTime)},"writeLogs")
     try:
         monCheck.clearfromMongo('jobsByCode')
         myJobs=mongoScraperModule.jobScrape(agency_codes,badC,linkSrchTemplate_Code,jobLinkTemplate)
@@ -62,7 +69,15 @@ if __name__== "__main__":
         # for job in myJobs:
         #     writeToMongo(job,"jobsByCode")
     except Exception as e:
-        writeToMongo({"log":"Writing today 7-10-21,"+str(currTime)+" something crashed"},"writeLogs")
+        myLog={
+                "step":"Post scrape, writing to Mongo",
+                "log":"Failed due to "+str(e),
+                "date":str(datetime.now().strftime("%m/%d/%Y")),
+                "time":str(datetime.now().strftime("%H:%M:%S")),
+                "datetime":str(datetime.now())}
+
+        writeToMongo(myLog,"writeLogs")
+        # writeToMongo({"log":"Writing today 7-10-21,"+str(currTime)+" something crashed"},"writeLogs")
         print("System failure dont know why. see below")
         print(e)
     if args.writeDB:

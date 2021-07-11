@@ -52,7 +52,11 @@ def getjob():
 #         myDict.pop(ind)
 # print(len(myDict))
 def clearfromMongo(collecName:str()):
-    writeToMongo({"log":"Clearing collection "+collecName},"writeLogs")
+    myLog={"log":"Clearing collection "+collecName,
+                "date":str(datetime.now().strftime("%m/%d/%Y")),
+                "time":str(datetime.now().strftime("%H:%M:%S")),
+                "datetime":str(datetime.now())}
+    writeToMongo(myLog,"writeLogs")
     url = dbsetup.monConnection
     client = pymongo.MongoClient(url)
     database = client[dbsetup.db]
@@ -67,8 +71,11 @@ def writeToMongo(jobJson:dict(),collecName:str()):
     try:
         collec.insert_one(jobJson)
     except Exception as e:
-
-        writeToMongo({"Log":"Failed due to: "+str(e)},"writeLogs")
+        myLog={"log":"Failed due to: "+str(e),
+                "date":str(datetime.now().strftime("%m/%d/%Y")),
+                "time":str(datetime.now().strftime("%H:%M:%S")),
+                "datetime":str(datetime.now())}
+        writeToMongo(myLog,"writeLogs")
     # print(collec.count_documents({}))
 def writeToMongoMany(manyjobJson:dict(),collecName:str()):
     url = dbsetup.monConnection
@@ -78,8 +85,14 @@ def writeToMongoMany(manyjobJson:dict(),collecName:str()):
     try:
         collec.insert_many(manyjobJson)
     except Exception as e:
+        myLog={
+                "step":"Writing"+len(manyjobJson)+" jobs to "+str(collecName),
+                "log":"Failed due to: "+str(e),
+                "date":str(datetime.now().strftime("%m/%d/%Y")),
+                "time":str(datetime.now().strftime("%H:%M:%S")),
+                "datetime":str(datetime.now())}
 
-        writeToMongo({"Log":"Failed due to: "+str(e)},"writeLogs")
+        writeToMongo(myLog,"writeLogs")
     # print(collec.count_documents({}))
 def mongoCompareAgencyandMeta_DB()->list():
     
@@ -93,16 +106,21 @@ def mongoCompareAgencyandMeta_DB()->list():
         detailcollection = database[searchCollection]
         codecollection = database['jobsByCode']
         contentcollection=database['jobInfo_Content']
-        # "jobNum":{"$regex":str(code),"$options":"-i"}
-        #result = collection.find({},{"_id":False})
+
         details_data= json.loads(dumps(detailcollection.find({},{"_id":False})))
         agency_data=json.loads(dumps(codecollection.find({},{"_id":False})))
         content_data=json.loads(dumps(contentcollection.find({},{"_id":False})))
 
     except Exception as e:
-        result="[{'Error':'Connection failed'"
-        print("Error")
-        print(e)
+
+        myLog={
+                "step":"Compare agency to Meta",
+                "log":"Failed due to: "+str(e),
+                "date":str(datetime.now().strftime("%m/%d/%Y")),
+                "time":str(datetime.now().strftime("%H:%M:%S")),
+                "datetime":str(datetime.now())}
+
+        writeToMongo(myLog,"writeLogs")
         return result
     
 
@@ -136,28 +154,5 @@ def mongoCompareAgencyandMeta_DB()->list():
         jobNum=job['jobNum']
         if jobNum not in details_jobNum:
             joblinks.append([job['link'],job['jobNum']])
-
-
-
-
-
-
-
-
     print(len(agency_jobNum))
-    # Check for new ones. 
-
-    # Remove non matches from details
-
-    # Remove non matches from the Job Description
-    # descrip_count=0
-    # for descrip_id in fullDescription:
-    #     if descrip_id in agency_jobNum:
-    #         continue
-    #     else:
-    #         descrip_count=descrip_count+1
-    #         session.query(JobDescrip_Model).filter(JobDescrip_Model.jobNum==descrip_id).delete(synchronize_session="fetch")
-    #         session.commit()
-    #joblinks=[[item['link'],item['jobNum']] for item in agency_data]
-
     return joblinks

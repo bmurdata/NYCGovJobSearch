@@ -143,11 +143,7 @@ def scrape_multi_arr(jobllinks:list()):
             try:
                 jobLabels=browser.find_elements_by_css_selector("div.ps_box-group.hrs_cg_groupbox_field_label_back .ps_header-group")
                 jobContent=browser.find_elements_by_css_selector("div.ps_box-group.hrs_cg_groupbox_field_label_back .ps_content-group")
-                # print(jobContent[0].get_attribute('innerText'))
-                # print("There are some number of labels. That number is "+str(len(jobLabels)))
-                # print("There are some number of Content. That number is "+str(len(jobContent)))
                 jobDescrip={jobLabels[i].get_attribute('innerText'):jobContent[i].get_attribute('innerText') for i in range(len(jobLabels))}
-                # print("Sems to work! Dictionary of length: "+str(len(jobDescrip)))
             except Exception as e:
                 print(e)
                 print("Nothing to add")
@@ -156,11 +152,9 @@ def scrape_multi_arr(jobllinks:list()):
             jobDescrip['jobLink']=link[0]
             
             jobDescription = {label: jobDescrip.get(label,"Not listed") for label in myLabels.details_order}
-            #jobDescription['jobNum']=link[1]
             job_detail.append(jobDescription)
-            # monCheck.writeToMongo(jobDescription,'jobInfo_Content')
             current_job={'HiringAgency':agency_title,'jobLink':link[0],'jobNum':link[1]}
-            # Write to the cmd line. Comment out in production
+            # Write to the cmd line. Comment out if needed
             if len(jobMeta)>0:
                 sys.stdout.write('\r')
                 sys.stdout.flush()
@@ -185,7 +179,6 @@ def scrape_multi_arr(jobllinks:list()):
                         current_job[i] =jobMeta[i] if jobMeta[i] and jobMeta[i] is not "\u00a0" else "Not Listed"
                         
             jobJson.append(current_job)
-            # monCheck.writeToMongo(current_job,'jobInfo_Meta')
     except Exception as e:
         print("Not really sure why things fell apart. Keep trying ")
         print(e)
