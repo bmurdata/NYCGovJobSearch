@@ -5,9 +5,9 @@ from bson.json_util import dumps
 import dbconn as dbsetup
 
 from datetime import datetime,timedelta
-def testMongo()-> dict():
+def testMongo(searchCollection:str()="jobInfo_Meta")-> dict():
     print('Testing connection to Mongo DB')
-    searchCollection="jobInfo_Meta"
+    
 
     try:
         url = dbsetup.monConnection
@@ -21,6 +21,7 @@ def testMongo()-> dict():
         print(len(result))
         m=list(result)
         print(len(m))
+        print("In Colelction: "+searchCollection+" there are: "+str(collection.count_documents({})))
     except Exception as e:
         result="[{'Error':'Connection failed'"
         print("Error")
@@ -28,8 +29,10 @@ def testMongo()-> dict():
     if len(result)==2:
         result="[{'Error':'No Result by that code. Enter numerical value. Example: code=12345'}]"
     return result
-def getjob():
-    pass
+def fullTest():
+    testMongo("jobInfo_Meta")
+    testMongo("jobsByCode")
+    testMongo("jobInfo_Content")
 
 # Test Mongo Connection
 # myDict=testMongo()
@@ -110,6 +113,9 @@ def mongoCompareAgencyandMeta_DB()->list():
         details_data= json.loads(dumps(detailcollection.find({},{"_id":False})))
         agency_data=json.loads(dumps(codecollection.find({},{"_id":False})))
         content_data=json.loads(dumps(contentcollection.find({},{"_id":False})))
+        if codecollection.count_documents({})==0:
+            writeToMongo({"log":"JobsByCode is empty"},'writeLogs')
+            return 0
 
     except Exception as e:
 
