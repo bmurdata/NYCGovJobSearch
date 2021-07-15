@@ -62,10 +62,30 @@ if __name__== "__main__":
     writeToMongo(myLog,"writeLogs")
     # writeToMongo({"log":"Writing today 7-10-21"+str(currTime)},"writeLogs")
     try:
-        monCheck.clearfromMongo('jobsByCode')
+        
         myJobs=mongoScraperModule.jobScrape(agency_codes,badC,linkSrchTemplate_Code,jobLinkTemplate)
-        writeToMongo({"log":"Writing this many jobs on 7-10-21: "+str(len(myJobs))+" at "+str(currTime)},"writeLogs")
-        writeToMongoMany(myJobs,'jobsByCode')
+        if len(myJobs)!=0:
+            myLog={
+                "step":"Clear jobCode and writeback ",
+                "log":"Wiping and writing",
+                "date":str(datetime.now().strftime("%m/%d/%Y")),
+                "time":str(datetime.now().strftime("%H:%M:%S")),
+                "datetime":str(datetime.now())}
+            monCheck.clearfromMongo('jobsByCode')
+            writeToMongo(myLog,"writeLogs")
+            writeToMongoMany(myJobs,'jobsByCode')
+            if args.writeDB:
+                print("Writing to DB")
+                jobLinks=monCheck.mongoCompareAgencyandMeta_DB()
+                mongoScraperModule.scrape_multi_arr(jobLinks)
+        elif len(myJobs)==0:
+            myLog={
+                "step":"Clear jobCode and writeback ",
+                "log":"Failed, myjobs is 0",
+                "date":str(datetime.now().strftime("%m/%d/%Y")),
+                "time":str(datetime.now().strftime("%H:%M:%S")),
+                "datetime":str(datetime.now())}
+            writeToMongo(myLog,"writeLogs")
         # for job in myJobs:
         #     writeToMongo(job,"jobsByCode")
     except Exception as e:
@@ -80,10 +100,7 @@ if __name__== "__main__":
         # writeToMongo({"log":"Writing today 7-10-21,"+str(currTime)+" something crashed"},"writeLogs")
         print("System failure dont know why. see below")
         print(e)
-    if args.writeDB:
-        print("Writing to DB")
-        jobLinks=monCheck.mongoCompareAgencyandMeta_DB()
-        mongoScraperModule.scrape_multi_arr(jobLinks)
+    
 
 
 # Scrape by Agency Code

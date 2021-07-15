@@ -180,10 +180,11 @@ def scrape_multi_arr(jobllinks:list()):
                         
             jobJson.append(current_job)
     except Exception as e:
-        print("Not really sure why things fell apart. Keep trying ")
-        print(e)
+        print("Not really sure why things fell apart. Keep trying. Writing what I got so far")
+        # print(e)
         traceback.print_exc()
-
+        monCheck.writeToMongoMany(job_detail,'jobInfo_Content')
+        monCheck.writeToMongoMany(jobJson,'jobInfo_Meta')
         browser.quit()
     browser.quit()
     monCheck.writeToMongoMany(job_detail,'jobInfo_Content')
