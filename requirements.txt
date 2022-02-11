@@ -2,7 +2,7 @@
 marshmallow-sqlalchemy==0.24.1
 mysql-connector-python==8.0.23
 numpy==1.19.4
-protobuf==3.14.0
+protobuf==3.15.0
 PyMySQL==1.0.2
 pyodbc==4.0.30
 selenium==3.141.0
